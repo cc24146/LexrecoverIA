@@ -1,7 +1,7 @@
 import torch
 from PIL import Image
 import torchvision.transforms as transforms
-from model import CNN
+from ia_letras_e_alg.model import CNN
 
 model = CNN()
 model.load_state_dict(torch.load("model.pth"))
