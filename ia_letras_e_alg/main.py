@@ -20,3 +20,4 @@ plot_history(
     val_accs
 )
 torch.save(model.state_dict(), "model_last.pth")
+
