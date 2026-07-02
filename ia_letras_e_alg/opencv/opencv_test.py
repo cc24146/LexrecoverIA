@@ -1,6 +1,23 @@
 import cv2
 import os
+import torch
+import sys
+import torchvision.transforms as transforms
 
+
+raiz_projeto = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if raiz_projeto not in sys.path:
+    sys.path.append(raiz_projeto)
+
+from model import CNN
+model = CNN()
+
+model.load_state_dict(torch.load("best_model.pth"))
+
+model.eval()
+
+
+emnist_labels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabdefghnqrt"
 
 # ---------------------------------------------------
 # 1) Ler imagem
@@ -50,11 +67,15 @@ print(f"Contornos encontrados: {len(contours)}")
 
 os.makedirs("opencv/caracteres", exist_ok=True)
 
+
+
 contador = 0
 
 # ---------------------------------------------------
 # 6) Percorrer cada contorno
 # ---------------------------------------------------
+
+letras = []
 
 for contour in contours:
 
@@ -109,14 +130,86 @@ for contour in contours:
     contador += 1
 
 
-    nome = f"opencv/caracteres/{contador:03d}.png"
+    letra_tensor = torch.from_numpy(letra_nova).float()
+    
+    letra_tensor = letra_tensor / 255.0
+    
+    letra_tensor = letra_tensor.unsqueeze(0).unsqueeze(0) 
 
-    cv2.imwrite(nome, letra_nova)
+    with torch.no_grad():
+        output = model(letra_tensor)  
+        predicted = output.argmax(dim=1).item()
+
+    # print(f"Imagem {contador:03d}.png previsto como:", emnist_labels[predicted])
+    # nome = f"opencv/caracteres/{contador:03d}.png"
+
+    # cv2.imwrite(nome, letra_nova)
+
+    letras.append({
+        "x" : x,
+        "y" : y,
+        "imagem" : letra_nova,
+        "previsao" : emnist_labels[predicted]
+    })
 
 print(f"Caracteres salvos: {contador}")
 
-def retornarContador():
-    return contador
+
+# ---------------------------------------------------
+# Ordenar as letras: Linha por Linha de forma Dinâmica
+# ---------------------------------------------------
+
+# 1. Primeiro, ordena tudo puramente de cima para baixo (pelo Y)
+letras.sort(key=lambda l: l["y"])
+
+linhas = []
+linha_atual = []
+
+for l in letras:
+    if not linha_atual:
+        linha_atual.append(l)
+    else:
+        # Pega o Y médio da linha atual para comparar
+        y_medio_linha = sum(item["y"] for item in linha_atual) / len(linha_atual)
+        
+        # Se a nova letra estiver verticalmente perto da média da linha atual,
+        # significa que ela pertence à mesma linha.
+        # Usamos uma tolerância baseada em 70% da altura do próprio caractere.
+        altura_referencia = l["imagem"].shape[0]  # geralmente 28 pixels
+        tolerancia = altura_referencia * 0.7 
+        
+        if abs(l["y"] - y_medio_linha) < tolerancia:
+            linha_atual.append(l)
+        else:
+            # Se mudou de linha, fecha a linha atual e começa uma nova
+            linhas.append(linha_atual)
+            linha_atual = [l]
+
+if linha_atual:
+    linhas.append(linha_atual)
+
+letras_ordenadas_lista = []
+contador_ordenado = 0
+
+for i, linha in enumerate(linhas):
+    linha.sort(key=lambda l: l["x"])
+    
+    for l in linha:
+        contador_ordenado += 1
+        letras_ordenadas_lista.append(l["previsao"])
+        
+
+# ---------------------------------------------------
+# Exibir os resultados corrigidos
+# ---------------------------------------------------
+print("Lista de letras na ordem certa:", letras_ordenadas_lista)
+
+texto_completo = "".join(letras_ordenadas_lista)
+print("Texto detectado completo:", texto_completo)
+
+
+
+
 # ---------------------------------------------------
 # 7) Mostrar resultado
 # ---------------------------------------------------
