@@ -148,20 +148,15 @@ for contour in contours:
     letras.append({
         "x" : x,
         "y" : y,
+        "w" : w,
+        "h" : h,
         "imagem" : letra_nova,
         "previsao" : emnist_labels[predicted]
     })
 
 print(f"Caracteres salvos: {contador}")
 
-
-# ---------------------------------------------------
-# Ordenar as letras: Linha por Linha de forma Dinâmica
-# ---------------------------------------------------
-
-# 1. Primeiro, ordena tudo puramente de cima para baixo (pelo Y)
 letras.sort(key=lambda l: l["y"])
-
 linhas = []
 linha_atual = []
 
@@ -169,22 +164,15 @@ for l in letras:
     if not linha_atual:
         linha_atual.append(l)
     else:
-        # Pega o Y médio da linha atual para comparar
         y_medio_linha = sum(item["y"] for item in linha_atual) / len(linha_atual)
-        
-        # Se a nova letra estiver verticalmente perto da média da linha atual,
-        # significa que ela pertence à mesma linha.
-        # Usamos uma tolerância baseada em 70% da altura do próprio caractere.
-        altura_referencia = l["imagem"].shape[0]  # geralmente 28 pixels
+        altura_referencia = l["imagem"].shape[0] 
         tolerancia = altura_referencia * 0.7 
         
         if abs(l["y"] - y_medio_linha) < tolerancia:
             linha_atual.append(l)
         else:
-            # Se mudou de linha, fecha a linha atual e começa uma nova
             linhas.append(linha_atual)
             linha_atual = [l]
-
 if linha_atual:
     linhas.append(linha_atual)
 
@@ -192,20 +180,33 @@ letras_ordenadas_lista = []
 contador_ordenado = 0
 
 for i, linha in enumerate(linhas):
-    linha.sort(key=lambda l: l["x"])
-    
-    for l in linha:
-        contador_ordenado += 1
-        letras_ordenadas_lista.append(l["previsao"])
-        
 
-# ---------------------------------------------------
-# Exibir os resultados corrigidos
-# ---------------------------------------------------
-print("Lista de letras na ordem certa:", letras_ordenadas_lista)
+    linha.sort(key=lambda l: l["x"])
+    largura_media = sum(letra["w"] for letra in linha) / len(linha)
+    
+    for indice, l in enumerate(linha):
+        contador_ordenado += 1
+        
+        if indice > 0:
+            letra_anterior = linha[indice - 1]
+
+            fim_anterior = letra_anterior["x"] + letra_anterior["w"]
+
+            distancia_horizontal = l["x"] - fim_anterior
+            largura_referencia = (letra_anterior["w"] + l["w"]) / 2
+        
+            if distancia_horizontal > largura_referencia * 0.8:
+                letras_ordenadas_lista.append(" ")
+
+        
+        letras_ordenadas_lista.append(l["previsao"])
+    
+    if i < len(linhas) - 1:
+        letras_ordenadas_lista.append("\n")
 
 texto_completo = "".join(letras_ordenadas_lista)
-print("Texto detectado completo:", texto_completo)
+print("Texto detectado completo:\n")
+print(texto_completo)
 
 
 
