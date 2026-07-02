@@ -59,7 +59,7 @@ def train(model, train_loader, test_loader):
 
         if val_accuracy > best_val_acc:
             best_val_acc = val_accuracy
-            torch.save(model.state_dict(), "best_model.pth")
+            torch.save(model.state_dict(), "cnn/best_model.pth")
             print(f"Novo melhor modelo! Accuracy = {val_accuracy:.2f}%")
 
         val_losses.append(val_loss)

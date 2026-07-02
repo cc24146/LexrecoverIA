@@ -4,7 +4,7 @@ import torchvision.transforms as transforms
 from model import CNN
 
 model = CNN()
-model.load_state_dict(torch.load("best_model.pth"))
+model.load_state_dict(torch.load("cnn/best_model.pth"))
 model.eval()
 
 transform = transforms.Compose([

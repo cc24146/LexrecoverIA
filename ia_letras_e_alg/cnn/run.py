@@ -4,6 +4,7 @@ from train import train, evaluate
 import torch
 from plot import plot_history
 
+
 model = CNN()
 
 train_loader, test_loader = get_data()
@@ -19,5 +20,5 @@ plot_history(
     val_losses,
     val_accs
 )
-torch.save(model.state_dict(), "model_last.pth")
+torch.save(model.state_dict(), "cnn/model_last.pth")
 

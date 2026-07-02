@@ -37,5 +37,5 @@ def plot_history(train_losses, train_accs, val_losses, val_accs):
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig("training_history.png", dpi=300)
+    plt.savefig("cnn/images/training_history.png", dpi=300)
     plt.show()
