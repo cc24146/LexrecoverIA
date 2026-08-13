@@ -1,5 +1,9 @@
+import os
 import torch
 import torch.nn as nn
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+MODEL_PATH = os.path.join(PROJECT_ROOT, "crnn", "best_model.pth")
 
 
 def train(model, train_loader, test_loader):
@@ -22,10 +26,6 @@ def train(model, train_loader, test_loader):
         total_loss = 0
         correct = 0
         total = 0
-
-        # ======================
-        # TREINAMENTO
-        # ======================
 
         for images, labels in train_loader:
 
@@ -51,15 +51,11 @@ def train(model, train_loader, test_loader):
         train_losses.append(total_loss)
         train_accs.append(train_accuracy)
 
-        # ======================
-        # VALIDAÇÃO
-        # ======================
-
         val_loss, val_accuracy = evaluate(model, test_loader)
 
         if val_accuracy > best_val_acc:
             best_val_acc = val_accuracy
-            torch.save(model.state_dict(), "cnn/best_model.pth")
+            torch.save(model.state_dict(), MODEL_PATH)
             print(f"Novo melhor modelo! Accuracy = {val_accuracy:.2f}%")
 
         val_losses.append(val_loss)

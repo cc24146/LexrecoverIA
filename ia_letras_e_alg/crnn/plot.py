@@ -1,4 +1,13 @@
+import os
 import matplotlib.pyplot as plt
+
+
+OUTPUT_PATH = os.path.join(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..")),
+    "crnn",
+    "images",
+    "training_history.png"
+)
 
 
 def plot_history(train_losses, train_accs, val_losses, val_accs):
@@ -37,5 +46,6 @@ def plot_history(train_losses, train_accs, val_losses, val_accs):
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig("cnn/images/training_history.png", dpi=300)
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    plt.savefig(OUTPUT_PATH, dpi=300)
     plt.show()

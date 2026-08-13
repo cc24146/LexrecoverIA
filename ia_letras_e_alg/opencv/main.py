@@ -3,25 +3,23 @@ import os
 import torch
 import sys
 
-# Ajuste do path para o modelo
 raiz_projeto = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if raiz_projeto not in sys.path:
     sys.path.append(raiz_projeto)
 
-from cnn.model import CNN
-# Importando as funções que criamos nos outros arquivos
+from crnn.model import CRNN
 from processamento import carregar_e_binarizar, extrair_contornos, processar_letra
 from ordenacao import agrupar_em_linhas, reconstruir_texto
 
-# Configuração do Modelo
-model = CNN()
-model.load_state_dict(torch.load(os.path.join(raiz_projeto, "cnn/best_model.pth")))
+MODEL_PATH = os.path.join(raiz_projeto, "crnn", "best_model.pth")
+
+model = CRNN()
+model.load_state_dict(torch.load(MODEL_PATH, map_location="cpu"))
 model.eval()
 
 emnist_labels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabdefghnqrt"
 
-# 1) Processamento da Imagem
-imagem_caminho = "opencv/imagens/dificil.png"
+imagem_caminho = os.path.join(raiz_projeto, "opencv", "imagens", "pagina.png")
 image, image_boxes, binary = carregar_e_binarizar(imagem_caminho)
 
 if image is None:
@@ -44,8 +42,8 @@ for contour in contours:
     cv2.rectangle(image_boxes, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     # Preparação para o PyTorch
-    letra_tensor = torch.from_numpy(letra_nova).float() / 255.0
-    letra_tensor = letra_tensor.unsqueeze(0).unsqueeze(0) 
+    letra_nova = letra_nova.astype("float32") / 255.0
+    letra_tensor = torch.from_numpy(letra_nova).unsqueeze(0).unsqueeze(0)
 
     with torch.no_grad():
         output = model(letra_tensor)  
@@ -59,10 +57,7 @@ for contour in contours:
 
 # 3) Ordenação e montagem do texto
 linhas = agrupar_em_linhas(letras)
-texto_completo = reconstruir_texto(
-    linhas,
-    binary
-)
+texto_completo = reconstruir_texto(linhas)
 
 print("Texto detectado completo:\n")
 print(texto_completo)
