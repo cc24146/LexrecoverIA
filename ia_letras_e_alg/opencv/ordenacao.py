@@ -1,3 +1,5 @@
+from processamento import detectar_espacos_por_projecao
+
 def agrupar_em_linhas(letras):
     letras.sort(key=lambda l: l["y"])
     linhas = []
@@ -20,24 +22,50 @@ def agrupar_em_linhas(letras):
         linhas.append(linha_atual)
     return linhas
 
-def reconstruir_texto(linhas):
+def reconstruir_texto(linhas, binary):
     letras_ordenadas_lista = []
 
     for i, linha in enumerate(linhas):
+
         linha.sort(key=lambda l: l["x"])
-        
+
+        espacos = detectar_espacos_por_projecao(
+            binary,
+            linha
+        )
+
         for indice, l in enumerate(linha):
+
             if indice > 0:
-                letra_anterior = linha[indice - 1]
-                fim_anterior = letra_anterior["x"] + letra_anterior["w"]
-                distancia_horizontal = l["x"] - fim_anterior
-                largura_referencia = (letra_anterior["w"] + l["w"]) / 2
-            
-                if distancia_horizontal > largura_referencia * 0.8:
+
+                anterior = linha[indice - 1]
+
+                fim_anterior = (
+                    anterior["x"]
+                    + anterior["w"]
+                )
+
+                inicio_atual = l["x"]
+
+                tem_espaco = False
+
+                for gap in espacos:
+
+                    if (
+                        gap["inicio"] >= fim_anterior
+                        and
+                        gap["fim"] <= inicio_atual
+                    ):
+                        tem_espaco = True
+                        break
+
+                if tem_espaco:
                     letras_ordenadas_lista.append(" ")
-            
-            letras_ordenadas_lista.append(l["previsao"])
-        
+
+            letras_ordenadas_lista.append(
+                l["previsao"]
+            )
+
         if i < len(linhas) - 1:
             letras_ordenadas_lista.append("\n")
 

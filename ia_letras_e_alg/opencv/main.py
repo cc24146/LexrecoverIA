@@ -59,7 +59,10 @@ for contour in contours:
 
 # 3) Ordenação e montagem do texto
 linhas = agrupar_em_linhas(letras)
-texto_completo = reconstruir_texto(linhas)
+texto_completo = reconstruir_texto(
+    linhas,
+    binary
+)
 
 print("Texto detectado completo:\n")
 print(texto_completo)
