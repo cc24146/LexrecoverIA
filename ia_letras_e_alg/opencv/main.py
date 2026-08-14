@@ -57,7 +57,7 @@ for contour in contours:
 
 # 3) Ordenação e montagem do texto
 linhas = agrupar_em_linhas(letras)
-texto_completo = reconstruir_texto(linhas)
+texto_completo = reconstruir_texto(linhas, binary)
 
 print("Texto detectado completo:\n")
 print(texto_completo)
@@ -80,8 +80,8 @@ cv2.destroyAllWindows()
 # if raiz_projeto not in sys.path:
 #     sys.path.append(raiz_projeto)
 
-# from model import CNN
-# model = CNN()
+# from crnn.model import CRNN
+# model = CRNN()
 
 # model.load_state_dict(torch.load("best_model.pth"))
 
