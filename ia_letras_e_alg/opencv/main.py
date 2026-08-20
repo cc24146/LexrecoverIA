@@ -1,69 +1,398 @@
 import cv2
 import os
-import torch
 import sys
+import torch
 
-raiz_projeto = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+raiz_projeto = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        ".."
+    )
+)
+
 if raiz_projeto not in sys.path:
     sys.path.append(raiz_projeto)
 
+
 from crnn.model import CRNN
-from processamento import carregar_e_binarizar, extrair_contornos, processar_letra
-from ordenacao import agrupar_em_linhas, reconstruir_texto
 
-MODEL_PATH = os.path.join(raiz_projeto, "crnn", "best_model.pth")
+from processamento import (
+    carregar_e_binarizar,
+    extrair_contornos,
+    processar_letra
+)
 
-model = CRNN()
-model.load_state_dict(torch.load(MODEL_PATH, map_location="cpu"))
+from ordenacao import (
+    agrupar_em_linhas,
+    reconstruir_texto
+)
+
+from espacos import (
+    detectar_espacos_linha
+)
+
+
+device = torch.device(
+    "cuda"
+    if torch.cuda.is_available()
+    else "cpu"
+)
+
+
+model = CRNN().to(device)
+
+caminho_modelo = os.path.join(
+    raiz_projeto,
+    "crnn",
+    "best_model.pth"
+)
+
+if not os.path.exists(caminho_modelo):
+    print("Modelo não encontrado:")
+    print(caminho_modelo)
+    print("Treine o modelo antes de executar o OCR.")
+    sys.exit()
+
+
+model.load_state_dict(
+    torch.load(
+        caminho_modelo,
+        map_location=device
+    )
+)
+
 model.eval()
 
-emnist_labels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabdefghnqrt"
 
-imagem_caminho = os.path.join(raiz_projeto, "opencv", "imagens", "pagina.png")
-image, image_boxes, binary = carregar_e_binarizar(imagem_caminho)
+emnist_labels = (
+    "0123456789"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "abdefghnqrt"
+)
+
+
+imagem_caminho = os.path.join(
+    raiz_projeto,
+    "opencv",
+    "imagens",
+    "dificil.png"
+)
+
+
+(
+    image,
+    image_boxes,
+    binary
+) = carregar_e_binarizar(
+    imagem_caminho
+)
+
 
 if image is None:
-    print("Imagem não encontrada.")
-    exit()
+    print("Imagem não encontrada:")
+    print(imagem_caminho)
+    sys.exit()
 
-contours = extrair_contornos(binary)
-print(f"Contornos encontrados: {len(contours)}")
+
+contours = extrair_contornos(
+    binary
+)
+
+
+print(
+    f"Contornos encontrados: "
+    f"{len(contours)}"
+)
+
 
 letras = []
 
-# 2) Loop de Predição
+debug_dir = os.path.join(
+    raiz_projeto,
+    "opencv",
+    "debug_caracteres"
+)
+
+os.makedirs(
+    debug_dir,
+    exist_ok=True
+)
+
+contador_debug = 0
+
+
 for contour in contours:
-    if cv2.contourArea(contour) < 30:
+
+    area = cv2.contourArea(
+        contour
+    )
+
+    if area < 30:
         continue
 
-    x, y, w, h, letra_nova = processar_letra(binary, contour)
 
-    # Desenha na imagem de exibição
-    cv2.rectangle(image_boxes, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    (
+        x,
+        y,
+        w,
+        h,
+        letra_nova
+    ) = processar_letra(
+        binary,
+        contour
+    )
 
-    # Preparação para o PyTorch
-    letra_nova = letra_nova.astype("float32") / 255.0
-    letra_tensor = torch.from_numpy(letra_nova).unsqueeze(0).unsqueeze(0)
+
+    contador_debug += 1
+
+    cv2.imwrite(
+        os.path.join(
+            debug_dir,
+            f"{contador_debug:03d}.png"
+        ),
+        letra_nova
+    )
+
+
+    cv2.rectangle(
+        image_boxes,
+        (x, y),
+        (x + w, y + h),
+        (0, 255, 0),
+        2
+    )
+
+
+    letra_normalizada = (
+        letra_nova.astype("float32")
+        / 255.0
+    )
+
+
+    letra_tensor = torch.from_numpy(
+        letra_normalizada
+    )
+
+    letra_tensor = (
+        letra_tensor
+        .unsqueeze(0)
+        .unsqueeze(0)
+        .to(device)
+    )
+
 
     with torch.no_grad():
-        output = model(letra_tensor)  
-        predicted = output.argmax(dim=1).item()
+
+        output = model(
+            letra_tensor
+        )
+
+        probabilidades = torch.softmax(
+            output,
+            dim=1
+        )
+
+        (
+            confianca_geral,
+            predicted
+        ) = probabilidades.max(
+            dim=1
+        )
+
+        predicted = (
+            predicted.item()
+        )
+
+        confianca_geral = (
+            confianca_geral.item()
+        )
+
+
+        probabilidades_letras = (
+            probabilidades[:, 10:]
+        )
+
+        (
+            confianca_letra,
+            predicted_letra
+        ) = probabilidades_letras.max(
+            dim=1
+        )
+
+        predicted_letra = (
+            predicted_letra.item()
+            + 10
+        )
+
+        confianca_letra = (
+            confianca_letra.item()
+        )
+
+
+    caractere = emnist_labels[
+        predicted
+    ]
+
+    melhor_letra = emnist_labels[
+        predicted_letra
+    ]
+
 
     letras.append({
-        "x": x, "y": y, "w": w, "h": h,
+        "x": x,
+        "y": y,
+        "w": w,
+        "h": h,
         "imagem": letra_nova,
-        "previsao": emnist_labels[predicted]
+        "previsao": caractere,
+        "melhor_letra": melhor_letra,
+        "confianca": confianca_geral,
+        "confianca_letra": confianca_letra
     })
 
-# 3) Ordenação e montagem do texto
-linhas = agrupar_em_linhas(letras)
-texto_completo = reconstruir_texto(linhas, binary)
 
-print("Texto detectado completo:\n")
-print(texto_completo)
+print(
+    f"Caracteres utilizados: "
+    f"{len(letras)}"
+)
 
-# 4) Exibir resultado visual
-cv2.imshow("Retangulos", image_boxes)
+
+linhas = agrupar_em_linhas(
+    letras
+)
+
+
+print(
+    f"Linhas encontradas: "
+    f"{len(linhas)}"
+)
+
+
+espacos_por_linha = []
+
+
+for numero, linha in enumerate(
+    linhas
+):
+
+    (
+        espacos,
+        gaps,
+        limiar
+    ) = detectar_espacos_linha(
+        binary,
+        linha
+    )
+
+    espacos_por_linha.append(
+        espacos
+    )
+
+
+    print()
+    print(
+        f"--- Linha {numero + 1} ---"
+    )
+
+    print(
+        "Caracteres:",
+        "".join(
+            letra["previsao"]
+            for letra in linha
+        )
+    )
+
+    print(
+        "Gaps:",
+        gaps
+    )
+
+    print(
+        f"Limiar de espaço: "
+        f"{limiar:.2f}px"
+    )
+
+    print(
+        "Espaço depois dos índices:",
+        sorted(espacos)
+    )
+
+
+    for indice in espacos:
+
+        if indice >= len(linha) - 1:
+            continue
+
+        anterior = linha[
+            indice
+        ]
+
+        proxima = linha[
+            indice + 1
+        ]
+
+        fim_anterior = (
+            anterior["x"]
+            + anterior["w"]
+        )
+
+        inicio_proxima = (
+            proxima["x"]
+        )
+
+        x_espaco = (
+            fim_anterior
+            + inicio_proxima
+        ) // 2
+
+        y_inicio = min(
+            letra["y"]
+            for letra in linha
+        )
+
+        y_fim = max(
+            letra["y"]
+            + letra["h"]
+            for letra in linha
+        )
+
+        cv2.line(
+            image_boxes,
+            (x_espaco, y_inicio),
+            (x_espaco, y_fim),
+            (0, 0, 255),
+            2
+        )
+
+
+texto_completo = reconstruir_texto(
+    linhas,
+    espacos_por_linha
+)
+
+
+print()
+print("==============================")
+print("TEXTO DETECTADO")
+print("==============================")
+print()
+
+print(
+    texto_completo
+)
+
+
+cv2.imshow(
+    "OCR - Retangulos e Espacos",
+    image_boxes
+)
+
+cv2.imshow(
+    "Imagem binaria",
+    binary
+)
+
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
