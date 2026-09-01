@@ -1,2 +1,2 @@
 # LexrecoverIA
-IA do Lexrecover
+IA do Lexrecover - Em progresso
