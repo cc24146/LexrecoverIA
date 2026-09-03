@@ -308,24 +308,75 @@ def detectar_espacos_linha(
         gaps_projecao
     )
 
+    distancias = medir_distancias_horizontais(
+        linha
+    )
+
     larguras = [
         letra["w"]
         for letra in linha
     ]
 
-    limiar = calcular_limiar_adaptativo(
+    limiar_projecao = calcular_limiar_adaptativo(
         gaps,
         larguras
     )
 
-    indices_espacos = {
-        i
-        for i, gap in enumerate(gaps)
-        if gap > limiar
-    }
+    limiar_distancia = calcular_limiar_adaptativo(
+        distancias,
+        larguras
+    )
+
+    indices_espacos = set()
+
+    for i in range(len(linha) - 1):
+
+        espaco_por_projecao = (
+            gaps[i] > limiar_projecao
+        )
+
+        espaco_por_distancia = (
+            distancias[i] > limiar_distancia
+            and
+            distancias[i] > median(larguras) * 0.40
+        )
+
+        if (
+            espaco_por_projecao
+            or espaco_por_distancia
+        ):
+            indices_espacos.add(i)
 
     return (
         indices_espacos,
         gaps,
-        limiar
+        limiar_projecao
     )
+
+def medir_distancias_horizontais(linha):
+    linha = sorted(
+        linha,
+        key=lambda letra: letra["x"]
+    )
+
+    distancias = []
+
+    for i in range(len(linha) - 1):
+        anterior = linha[i]
+        atual = linha[i + 1]
+
+        fim_anterior = (
+            anterior["x"]
+            + anterior["w"]
+        )
+
+        distancia = (
+            atual["x"]
+            - fim_anterior
+        )
+
+        distancias.append(
+            max(0, distancia)
+        )
+
+    return distancias

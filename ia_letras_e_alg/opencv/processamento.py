@@ -8,12 +8,14 @@ def carregar_e_binarizar(caminho_imagem):
         return None, None, None
     
     image_boxes = image.copy()
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
+
     _, binary = cv2.threshold(
-    gray,
-    0,
-    255,
-    cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
+        gray,
+        0,
+        255,
+        cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
     )
     
     return image, image_boxes, binary

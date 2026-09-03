@@ -25,13 +25,18 @@ from processamento import (
 
 from ordenacao import (
     agrupar_em_linhas,
-    reconstruir_texto
+    reconstruir_texto,
+    corrigir_palavra
 )
 
 from espacos import (
     detectar_espacos_linha
 )
 
+from segmentacao_dinamica import (
+    separar_palavras,
+    reconhecer_palavra_dinamica
+)
 
 device = torch.device(
     "cuda"
@@ -76,7 +81,7 @@ imagem_caminho = os.path.join(
     raiz_projeto,
     "opencv",
     "imagens",
-    "dificil.png"
+    "image.png"
 )
 
 
@@ -143,6 +148,13 @@ for contour in contours:
         contour
     )
 
+    cv2.rectangle(
+        image_boxes,
+        (x, y),
+        (x + w, y + h),
+        (0, 0, 255),
+        2
+    )
 
     contador_debug += 1
 
@@ -153,16 +165,6 @@ for contour in contours:
         ),
         letra_nova
     )
-
-
-    cv2.rectangle(
-        image_boxes,
-        (x, y),
-        (x + w, y + h),
-        (0, 255, 0),
-        2
-    )
-
 
     letra_normalizada = (
         letra_nova.astype("float32")
@@ -361,10 +363,100 @@ for numero, linha in enumerate(
             image_boxes,
             (x_espaco, y_inicio),
             (x_espaco, y_fim),
-            (0, 0, 255),
+            (255, 0, 0),
             2
         )
 
+texto_dinamico_linhas = []
+
+for numero_linha, linha in enumerate(
+    linhas
+):
+    espacos = espacos_por_linha[
+        numero_linha
+    ]
+
+    palavras = separar_palavras(
+        linha,
+        espacos
+    )
+
+    palavras_reconhecidas = []
+
+    for palavra in palavras:
+
+        resultado = reconhecer_palavra_dinamica(
+            binary,
+            palavra,
+            model,
+            emnist_labels,
+            device
+        )
+
+        texto_palavra = resultado[
+            "texto"
+        ]
+
+        if not texto_palavra:
+            texto_palavra = corrigir_palavra(
+                palavra
+            )
+
+        palavras_reconhecidas.append(
+            texto_palavra
+        )
+
+        altura_palavra = resultado[
+            "imagem"
+        ].shape[0]
+
+        for segmento in resultado[
+            "segmentos"
+        ]:
+
+            x_inicio_segmento = (
+                resultado["x"]
+                + segmento["inicio"]
+            )
+
+            x_fim_segmento = (
+                resultado["x"]
+                + segmento["fim"]
+            )
+
+            y_inicio_segmento = (
+                resultado["y"]
+            )
+
+            y_fim_segmento = (
+                resultado["y"]
+                + altura_palavra
+            )
+
+            cv2.rectangle(
+                image_boxes,
+                (
+                    x_inicio_segmento,
+                    y_inicio_segmento
+                ),
+                (
+                    x_fim_segmento,
+                    y_fim_segmento
+                ),
+                (0, 255, 255),
+                1
+            )
+
+    texto_dinamico_linhas.append(
+        " ".join(
+            palavras_reconhecidas
+        )
+    )
+
+
+texto_dinamico = "\n".join(
+    texto_dinamico_linhas
+)
 
 texto_completo = reconstruir_texto(
     linhas,
@@ -382,15 +474,20 @@ print(
     texto_completo
 )
 
+print()
+print("==============================")
+print("SEGMENTACAO DINAMICA")
+print("==============================")
+print()
+
+print(
+    texto_dinamico
+)
+
 
 cv2.imshow(
     "OCR - Retangulos e Espacos",
     image_boxes
-)
-
-cv2.imshow(
-    "Imagem binaria",
-    binary
 )
 
 cv2.waitKey(0)
