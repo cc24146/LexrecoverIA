@@ -52,7 +52,7 @@ def agrupar_em_linhas(letras):
 
             distancia = abs(
                 centro_letra
-                - centro_linha
+                - centro_linha  
             )
 
             if (

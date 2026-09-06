@@ -218,9 +218,16 @@ def gerar_cortes_candidatos(imagem):
             cortes.add(x)
 
     passo = max(
+    3,
+    int(
+        altura * 0.28
+    )
+    )
+
+    raio_busca = max(
         2,
         int(
-            altura * 0.18
+            altura * 0.08
         )
     )
 
@@ -229,10 +236,67 @@ def gerar_cortes_candidatos(imagem):
         largura,
         passo
     ):
-        cortes.add(x)
+        inicio = max(
+            1,
+            x - raio_busca
+        )
+
+        fim = min(
+            largura - 1,
+            x + raio_busca + 1
+        )
+
+        if inicio >= fim:
+            continue
+
+        melhor_x = inicio + int(
+            np.argmin(
+                suavizada[
+                    inicio:fim
+                ]
+            )
+        )
+        cortes.add(
+            melhor_x
+        )
+
+    cortes_ordenados = sorted(
+    cortes
+    )
+
+    distancia_minima = max(
+        2,
+        int(
+            altura * 0.10
+        )
+    )
+
+    cortes_filtrados = []
+
+    for corte in cortes_ordenados:
+
+        if not cortes_filtrados:
+            cortes_filtrados.append(
+                corte
+            )
+            continue
+
+        if (
+            corte
+            - cortes_filtrados[-1]
+            >= distancia_minima
+        ):
+            cortes_filtrados.append(
+                corte
+            )
+
+    if cortes_filtrados[-1] != largura:
+        cortes_filtrados.append(
+            largura
+        )
 
     return (
-        sorted(cortes),
+        cortes_filtrados,
         projecao
     )
 
@@ -244,16 +308,16 @@ def gerar_segmentos(
     altura = imagem.shape[0]
 
     largura_minima = max(
-        3,
+        4,
         int(
-            altura * 0.15
+            altura * 0.23
         )
     )
 
     largura_maxima = max(
         largura_minima + 1,
         int(
-            altura * 1.25
+            altura * 0.95
         )
     )
 
@@ -447,7 +511,7 @@ def melhor_sequencia(
                 1e-8
             )
 
-            score = ( math.log(confianca) + 0.25)
+            score = ( math.log(confianca) + 0.08)
 
             proporcao = (
                 segmento["largura"]
@@ -463,11 +527,11 @@ def melhor_sequencia(
                     - proporcao
                 ) * 4
 
-            if proporcao > 1.0:
+            if proporcao > 0.80:
                 score -= (
                     proporcao
-                    - 1.0
-                ) * 2
+                    - 0.80
+                ) * 3
 
             if j < quantidade - 1:
                 x_corte = cortes[j]
