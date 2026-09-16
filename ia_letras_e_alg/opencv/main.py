@@ -397,13 +397,12 @@ for numero_linha, linha in enumerate(
             "texto"
         ]
 
-        if not texto_palavra:
-            texto_palavra = corrigir_palavra(
-                palavra
-            )
+        entrada = texto_palavra if texto_palavra else palavra
+
+        texto_corrigido = corrigir_palavra(entrada)
 
         palavras_reconhecidas.append(
-            texto_palavra
+            texto_corrigido
         )
 
         altura_palavra = resultado[
