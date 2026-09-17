@@ -4,7 +4,7 @@ from .config import (
     BLANK_INDEX,
     INDEX_TO_CHAR
 )
-
+from .corretor import corrigir_palavra
 
 def greedy_decode(
     outputs,
@@ -59,9 +59,13 @@ def greedy_decode(
 
             anterior = indice
 
+        palavra_bruta = "".join(texto)
+
+        palavra_corrigida = corrigir_palavra(palavra_bruta)
+
         resultados.append(
             "".join(
-                texto
+                palavra_corrigida
             )
         )
 
