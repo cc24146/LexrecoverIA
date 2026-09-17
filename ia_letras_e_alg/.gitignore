@@ -1,3 +1,23 @@
+# Ambientes virtuais
 .venv/
+venv/
+
+# Arquivos temporários do Python e ferramentas
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Conjuntos de treinamento e pesos locais
 data/
+dataset_bressay/
 *.pth
+
+# Recortes gerados durante o reconhecimento
+opencv/debug_caracteres/
+opencv/debug_linhas_ctc/
+
+# Metadados do sistema operacional
+.DS_Store
+Thumbs.db
