@@ -20,7 +20,66 @@ if PROJECT_ROOT not in sys.path:
 
 
 from opencv.reconhecimento_ctc import ReconhecedorCTC
+from crnn_ctc.pos_processamento import corrigir_texto
 
+def filtrar_pequenos_componentes(binaria):
+    quantidade, rotulos, estatisticas, _ = (
+        cv2.connectedComponentsWithStats(
+            binaria,
+            connectivity=8
+        )
+    )
+
+    altura, largura = binaria.shape
+
+    area_minima = max(
+        3,
+        round(altura * largura * 0.00002)
+    )
+
+    mascara_limpa = np.zeros_like(
+        binaria
+    )
+
+    for indice in range(1, quantidade):
+        area = estatisticas[
+            indice,
+            cv2.CC_STAT_AREA
+        ]
+
+        if area >= area_minima:
+            mascara_limpa[
+                rotulos == indice
+            ] = 255
+
+    return mascara_limpa
+
+def extrair_componentes(binaria):
+    quantidade, rotulos, estatisticas, _ = (
+        cv2.connectedComponentsWithStats(
+            binaria,
+            connectivity=8
+        )
+    )
+
+    componentes = []
+
+    for indice in range(1, quantidade):
+        x, y, largura, altura, area = (
+            int(valor)
+            for valor in estatisticas[indice]
+        )
+
+        componentes.append({
+            "id": indice,
+            "x": x,
+            "y": y,
+            "largura": largura,
+            "altura": altura,
+            "area": area,
+        })
+
+    return componentes, rotulos
 
 def detectar_linhas(
     imagem
@@ -31,30 +90,119 @@ def detectar_linhas(
         cv2.COLOR_BGR2GRAY
     )
 
-    _, binaria = cv2.threshold(
+    binaria_adaptativa = cv2.adaptiveThreshold(
+            cinza,
+            255,
+            cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+            cv2.THRESH_BINARY_INV,
+            41,
+            10
+    )
+
+        # Referência mais restritiva de onde existe tinta.
+    _, binaria_otsu = cv2.threshold(
         cinza,
         0,
         255,
-        cv2.THRESH_BINARY_INV
-        + cv2.THRESH_OTSU
+        cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
+    )
+
+    quantidade, rotulos_adaptativos, _, _ = (
+        cv2.connectedComponentsWithStats(
+            binaria_adaptativa,
+            connectivity=8
+        )
+    )
+
+    # Identifica componentes adaptativos que também
+    # possuem algum pixel de tinta na máscara Otsu.
+    ids_confirmados = np.unique(
+        rotulos_adaptativos[binaria_otsu > 0]
+    )
+
+    manter = np.zeros(
+        quantidade,
+        dtype=bool
+    )
+
+    manter[ids_confirmados] = True
+
+    # O fundo nunca deve ser selecionado.
+    manter[0] = False
+
+    # Preserva o componente adaptativo inteiro.
+    binaria = (
+        manter[rotulos_adaptativos].astype(np.uint8)
+        * 255
+    )
+
+    cv2.imwrite(
+        os.path.join(
+            PROJECT_ROOT,
+            "opencv",
+            "debug_binaria_adaptativa.png"
+        ),
+        binaria_adaptativa
+    )
+    
+    cv2.imwrite(
+        os.path.join(
+            PROJECT_ROOT,
+            "opencv",
+            "debug_binaria_antes.png"
+        ),
+        binaria
+    )
+
+    #binaria = filtrar_pequenos_componentes(
+    #    binaria
+    #)
+
+    cv2.imwrite(
+        os.path.join(
+            PROJECT_ROOT,
+            "opencv",
+            "debug_binaria_depois.png"
+        ),
+        binaria
+    )
+
+    quantidade_tinta = np.count_nonzero(
+        binaria_otsu,
+        axis=1
+    )
+    
+    minimo_tinta = max(
+        3,
+        round(binaria.shape[1] * 0.01)
     )
 
     possui_tinta = (
-        np.any(
-            binaria > 0,
-            axis=1
-        )
-        .astype(np.uint8)
+        quantidade_tinta >= minimo_tinta
+    ).astype(np.uint8)
+    
+    caminho_perfil = os.path.join(
+        PROJECT_ROOT,
+        "opencv",
+        "perfil_tinta.csv"
+    )
+
+    np.savetxt(
+        caminho_perfil,
+        np.column_stack((
+            np.arange(len(quantidade_tinta)),
+            quantidade_tinta,
+            possui_tinta
+        )),
+        delimiter=",",
+        header="y,pixels_tinta,ativo",
+        comments="",
+        fmt="%d"
     )
 
     altura = imagem.shape[0]
 
-    gap_maximo = max(
-        4,
-        int(
-            altura * 0.01
-        )
-    )
+    gap_maximo = 1
 
     intervalos = []
 
@@ -97,74 +245,142 @@ def detectar_linhas(
             )
         )
 
-    linhas = []
+    componentes, rotulos = extrair_componentes(binaria)
 
-    margem_y = 4
-    margem_x = 8
+    if not componentes or not intervalos:
+        return []
 
-    for y1, y2 in intervalos:
+    # Estima a altura dos traços maiores.
+    alturas = [
+        componente["altura"]
+        for componente in componentes
+    ]
 
-        y1 = max(
-            0,
-            y1 - margem_y
-        )
+    altura_referencia = float(
+        np.percentile(alturas, 75)
+    )
 
-        y2 = min(
-            imagem.shape[0] - 1,
-            y2 + margem_y
-        )
+    # Faixas muito finas não iniciam uma linha.
+    # Seus componentes ainda podem ser associados a outra faixa.
+    altura_minima = max(
+        5,
+        round(altura_referencia * 0.35)
+    )
 
-        trecho = binaria[
-            y1:y2 + 1
+    faixas = [
+        (inicio, fim)
+        for inicio, fim in intervalos
+        if fim - inicio + 1 >= altura_minima
+    ]
+
+    if not faixas:
+        return []
+
+    grupos = [[] for _ in faixas]
+
+    for componente in componentes:
+        topo = componente["y"]
+        fim = topo + componente["altura"]
+
+        # Mede quanto o componente ocupa de cada faixa.
+        sobreposicoes = [
+            max(
+                0,
+                min(fim, fim_faixa + 1)
+                - max(topo, inicio_faixa)
+            )
+            for inicio_faixa, fim_faixa in faixas
         ]
 
-        colunas = np.where(
-            np.any(
-                trecho > 0,
-                axis=0
-            )
-        )[0]
+        melhor = int(np.argmax(sobreposicoes))
 
-        if len(colunas) == 0:
+        if sobreposicoes[melhor] == 0:
+            # Pode ser um acento separado do corpo da linha.
+            distancias = [
+                max(
+                    inicio_faixa - fim,
+                    topo - (fim_faixa + 1),
+                    0
+                )
+                for inicio_faixa, fim_faixa in faixas
+            ]
+
+            melhor = int(np.argmin(distancias))
+
+            if distancias[melhor] > altura_referencia * 0.35:
+                continue
+
+        grupos[melhor].append(componente)
+
+    linhas = []
+
+    margem_x = 8
+    margem_y = 4
+
+    for grupo in grupos:
+        if not grupo:
             continue
 
         x1 = max(
             0,
-            int(colunas[0])
-            - margem_x
+            min(c["x"] for c in grupo) - margem_x
+        )
+
+        y1 = max(
+            0,
+            min(c["y"] for c in grupo) - margem_y
         )
 
         x2 = min(
-            imagem.shape[1] - 1,
-            int(colunas[-1])
+            imagem.shape[1],
+            max(c["x"] + c["largura"] for c in grupo)
             + margem_x
         )
 
-        largura = (
-            x2 - x1 + 1
+        y2 = min(
+            imagem.shape[0],
+            max(c["y"] + c["altura"] for c in grupo)
+            + margem_y
         )
 
-        altura_linha = (
-            y2 - y1 + 1
-        )
+        largura = x2 - x1
+        altura_linha = y2 - y1
 
-        if (
-            largura < 15
-            or altura_linha < 5
-        ):
+        if largura < 15 or altura_linha < 5:
             continue
 
-        linhas.append(
-            (
-                x1,
-                y1,
-                largura,
-                altura_linha
-            )
+        ids = [
+            componente["id"]
+            for componente in grupo
+        ]
+
+        rotulos_recorte = rotulos[y1:y2, x1:x2]
+
+        mascara_linha = np.isin(
+            rotulos_recorte,
+            ids
         )
 
+        recorte_original = imagem[y1:y2, x1:x2]
+
+        # Fundo branco com o mesmo tamanho e canais do recorte.
+        recorte_limpo = np.full_like(
+            recorte_original,
+            255
+        )
+
+        # Copia somente a tinta dos componentes deste grupo.
+        recorte_limpo[mascara_linha] = (
+            recorte_original[mascara_linha]
+        )
+
+        linhas.append({
+            "caixa": (x1, y1, largura, altura_linha),
+            "imagem": recorte_limpo,
+        })
+
     linhas.sort(
-        key=lambda caixa: caixa[1]
+        key=lambda item: item["caixa"][1]
     )
 
     return linhas
@@ -236,17 +452,14 @@ def main():
         "=============================="
     )
 
-    for indice, caixa in enumerate(
+    for indice, resultado in enumerate(
         caixas,
         start=1
     ):
 
-        x, y, w, h = caixa
+        x, y, w, h = resultado["caixa"]
 
-        linha = imagem[
-            y:y + h,
-            x:x + w
-        ]
+        linha = resultado["imagem"]
 
         caminho_debug = os.path.join(
             pasta_debug,
@@ -259,7 +472,11 @@ def main():
         )
 
         texto = reconhecedor.reconhecer(
-            linha
+            linha,
+            caminho_debug=os.path.join(
+                pasta_debug,
+                f"entrada_rede_{indice:02d}.png"
+            )
         )
 
         textos.append(
@@ -306,20 +523,23 @@ def main():
             2
         )
 
+    texto_bruto = "\n".join(textos)
+
     print()
-    print(
-        "TEXTO FINAL"
+    print("==============================")
+    print("TEXTO BRUTO (CTC)")
+    print("==============================")
+    print(texto_bruto)
+
+    texto_corrigido = corrigir_texto(
+        texto_bruto
     )
 
-    print(
-        "=============================="
-    )
-
-    print(
-        "\n".join(
-            textos
-        )
-    )
+    print()
+    print("==============================")
+    print("TEXTO CORRIGIDO (DICIONARIO)")
+    print("==============================")
+    print(texto_corrigido)
 
     cv2.imshow(
         "Linhas detectadas - CTC",

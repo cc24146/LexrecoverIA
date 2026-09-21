@@ -21,3 +21,8 @@ opencv/debug_linhas_ctc/
 # Metadados do sistema operacional
 .DS_Store
 Thumbs.db
+
+# Diagnósticos e exportações locais de OCR
+opencv/debug_binaria_*.png
+opencv/perfil_tinta.csv
+opencv/recortes_revisao/

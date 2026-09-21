@@ -1,0 +1,1061 @@
+{
+  "escopo": "diagnóstico de desenvolvimento por linha; referências provisórias",
+  "modelo": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\crnn_ctc\\final_model.pth",
+  "sha256_modelo": "56bfbe9f0b7b47582c6a6988a83a88b67b9f440ae18307d99bc58d29147c6b75",
+  "normalizacao": "NFC, minúsculas, pontuação como espaço, espaços compactados",
+  "numero_recortes": 47,
+  "totais": {
+    "caracteres": 1315,
+    "palavras": 235,
+    "bruto_caracteres": 347,
+    "corrigido_caracteres": 348,
+    "bruto_palavras": 139,
+    "corrigido_palavras": 134
+  },
+  "resumo": {
+    "bruto": {
+      "CER": 0.26387832699619773,
+      "WER": 0.5914893617021276
+    },
+    "corrigido": {
+      "CER": 0.264638783269962,
+      "WER": 0.5702127659574469
+    }
+  },
+  "linhas": [
+    {
+      "id": "m01_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_01\\linha_01_limpa.png",
+      "sha256_recorte": "8615018643ca226a255bd323777511d08d05bf20e45f66f890d0e57effdcd001",
+      "referencia": "VOCÊ NÃO VAI ACREDITAR",
+      "bruto": "voce não val agpgo?",
+      "corrigido": "voce não val agpgo?",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 10,
+          "edicoes_palavras": 3,
+          "CER": 0.45454545454545453,
+          "WER": 0.75
+        },
+        "corrigido": {
+          "edicoes_caracteres": 10,
+          "edicoes_palavras": 3,
+          "CER": 0.45454545454545453,
+          "WER": 0.75
+        }
+      }
+    },
+    {
+      "id": "m01_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_01\\linha_02_limpa.png",
+      "sha256_recorte": "ca02ddc25d5bcf3b43c2dbdd06231a0dfc07a798a50b6c2ee3f745f8bc81e04c",
+      "referencia": "MAS VOCÊ CABIA AQUI",
+      "bruto": "MA5 voue(Mbia ari",
+      "corrigido": "MA5 vote(Mbia ari",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 4,
+          "CER": 0.3684210526315789,
+          "WER": 1.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 4,
+          "CER": 0.3684210526315789,
+          "WER": 1.0
+        }
+      }
+    },
+    {
+      "id": "m02_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_02\\linha_01_limpa.png",
+      "sha256_recorte": "b4bbd209b4b78759c659be0253e2287691995ae7052a54f33a5b0467e7a6335c",
+      "referencia": "Minha mão não soa",
+      "bruto": "DDinha mão não 30a",
+      "corrigido": "DDinha mão não 30a",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.23529411764705882,
+          "WER": 0.5
+        },
+        "corrigido": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.23529411764705882,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m02_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_02\\linha_02_limpa.png",
+      "sha256_recorte": "faffed221d9849bfa323da37087c0a7b8daa5a44d6014cfd3e0498b8d7a400dc",
+      "referencia": "Como sua bunda",
+      "bruto": "Como sua bunda",
+      "corrigido": "Como sua bunda",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 0,
+          "edicoes_palavras": 0,
+          "CER": 0.0,
+          "WER": 0.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 0,
+          "edicoes_palavras": 0,
+          "CER": 0.0,
+          "WER": 0.0
+        }
+      }
+    },
+    {
+      "id": "m02_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_02\\linha_03_limpa.png",
+      "sha256_recorte": "7ed7dd7ac0b5cbee7481c65531c4ec24467a0e27ec54a8056118a512b00483b6",
+      "referencia": "Canções Para Ninar",
+      "bruto": "Counções Para Himar",
+      "corrigido": "Counções Para Himar",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.2222222222222222,
+          "WER": 0.6666666666666666
+        },
+        "corrigido": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.2222222222222222,
+          "WER": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "id": "m02_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_02\\linha_04_limpa.png",
+      "sha256_recorte": "49f814e921aabac03025630ffaff863170dde7e80785ec8e4a5f8d2f77c09043",
+      "referencia": "Menino Grande",
+      "bruto": "Menino Graandle",
+      "corrigido": "Menino Graandle",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 1,
+          "CER": 0.15384615384615385,
+          "WER": 0.5
+        },
+        "corrigido": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 1,
+          "CER": 0.15384615384615385,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m02_l05",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_02\\linha_05_limpa.png",
+      "sha256_recorte": "3fd3e65074c2c638dc723f85ec64b25b5f62e3cc6af7a4368e909e0cf45871f8",
+      "referencia": "Vinicius Guedes Pinheiro",
+      "bruto": "inícios Quedes Pinheiro",
+      "corrigido": "início quede Pinheiro",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.16666666666666666,
+          "WER": 0.6666666666666666
+        },
+        "corrigido": {
+          "edicoes_caracteres": 6,
+          "edicoes_palavras": 2,
+          "CER": 0.25,
+          "WER": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "id": "m03_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_03\\linha_01_limpa.png",
+      "sha256_recorte": "fe3bddaf7894d64d75b8b1ac020fed0f7ef2cd8ed8dd0c3e107e4ca9af0c926d",
+      "referencia": "Minha mão não soa",
+      "bruto": "Minha mão não soa",
+      "corrigido": "Minha mão não soa",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 0,
+          "edicoes_palavras": 0,
+          "CER": 0.0,
+          "WER": 0.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 0,
+          "edicoes_palavras": 0,
+          "CER": 0.0,
+          "WER": 0.0
+        }
+      }
+    },
+    {
+      "id": "m03_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_03\\linha_02_limpa.png",
+      "sha256_recorte": "3f00e6e313abb91606d3a0aa175908eeb5298ee2205d557f604ebe3bc24ce257",
+      "referencia": "Como sua bunda",
+      "bruto": "Conso sera bnha",
+      "corrigido": "Conso sera bnha",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 6,
+          "edicoes_palavras": 3,
+          "CER": 0.42857142857142855,
+          "WER": 1.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 6,
+          "edicoes_palavras": 3,
+          "CER": 0.42857142857142855,
+          "WER": 1.0
+        }
+      }
+    },
+    {
+      "id": "m03_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_03\\linha_03_limpa.png",
+      "sha256_recorte": "5fb560eae2d50008489b242e764679ba52c762013cdcf3ea843a78bf4ad446d1",
+      "referencia": "Canções Para Ninar",
+      "bruto": "Conções Para Minar",
+      "corrigido": "Conções Para Minar",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 2,
+          "CER": 0.1111111111111111,
+          "WER": 0.6666666666666666
+        },
+        "corrigido": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 2,
+          "CER": 0.1111111111111111,
+          "WER": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "id": "m03_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_03\\linha_04_limpa.png",
+      "sha256_recorte": "9912ae80218e56725f4e780543bcf33c5ba39c8c007758c7ce334b7391ea191e",
+      "referencia": "Menino Grande",
+      "bruto": "Memimo Ggrandi",
+      "corrigido": "Memimo Ggrandi",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.3076923076923077,
+          "WER": 1.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.3076923076923077,
+          "WER": 1.0
+        }
+      }
+    },
+    {
+      "id": "m03_l05",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_03\\linha_05_limpa.png",
+      "sha256_recorte": "7d4e6f860881ab18f1b6f3b6283ef61a3f7d45839c3f5a9bb354c3e446c8c2b2",
+      "referencia": "Vinicius Guedes Pinheiro",
+      "bruto": "OTimicaus gueder Cuileiran-",
+      "corrigido": "OTimicaus gueder Cuileiran-",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 11,
+          "edicoes_palavras": 3,
+          "CER": 0.4583333333333333,
+          "WER": 1.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 11,
+          "edicoes_palavras": 3,
+          "CER": 0.4583333333333333,
+          "WER": 1.0
+        }
+      }
+    },
+    {
+      "id": "m04_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_04\\linha_01_limpa.png",
+      "sha256_recorte": "bad0577f9a4759c1d9c5046cb21b45ade27525f107f40feecef3add9ccccc8b0",
+      "referencia": "A Taylor Swift é uma das",
+      "bruto": "A Juja Smio é um dos",
+      "corrigido": "A Juja Smio é um dos",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 11,
+          "edicoes_palavras": 4,
+          "CER": 0.4583333333333333,
+          "WER": 0.6666666666666666
+        },
+        "corrigido": {
+          "edicoes_caracteres": 11,
+          "edicoes_palavras": 4,
+          "CER": 0.4583333333333333,
+          "WER": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "id": "m04_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_04\\linha_03_limpa.png",
+      "sha256_recorte": "a1a7d023228eede101a3bb7a5ca581b597ca8dbfd7860dc49aba476bafabef42",
+      "referencia": "melhores cantoras do mundo competindo",
+      "bruto": "melhores cansoros do mundo compesndo",
+      "corrigido": "melhores cansoros do mundo compesndo",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.10810810810810811,
+          "WER": 0.4
+        },
+        "corrigido": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 2,
+          "CER": 0.10810810810810811,
+          "WER": 0.4
+        }
+      }
+    },
+    {
+      "id": "m04_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_04\\linha_04_limpa.png",
+      "sha256_recorte": "b0037a660c74aacb51f281a3c52aeffbf0133e561aa3cb4f30afa9ddf265abad",
+      "referencia": "Unicamente com Lana del Rey e",
+      "bruto": "inomento com cane del Poy e",
+      "corrigido": "inomento com cane del Poy e",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 9,
+          "edicoes_palavras": 3,
+          "CER": 0.3103448275862069,
+          "WER": 0.5
+        },
+        "corrigido": {
+          "edicoes_caracteres": 9,
+          "edicoes_palavras": 3,
+          "CER": 0.3103448275862069,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m04_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_04\\linha_05_limpa.png",
+      "sha256_recorte": "b6703d12edc9925aa277e846546e24661acf3610dafdcb0cd7e8cc697edb7e80",
+      "referencia": "Kanye West com suas",
+      "bruto": "fanje Nisse com sams",
+      "corrigido": "fanje Nisse com sams",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 8,
+          "edicoes_palavras": 3,
+          "CER": 0.42105263157894735,
+          "WER": 0.75
+        },
+        "corrigido": {
+          "edicoes_caracteres": 8,
+          "edicoes_palavras": 3,
+          "CER": 0.42105263157894735,
+          "WER": 0.75
+        }
+      }
+    },
+    {
+      "id": "m04_l05",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_04\\linha_06_limpa.png",
+      "sha256_recorte": "8afac2b13082346b35b009a8dc188cc1570550c538cfc4ccdc028e30cfa26d1d",
+      "referencia": "musicas unicas e inesqueciveis",
+      "bruto": "mosicas gAG8s \" epruleciceis,",
+      "corrigido": "mosicas gAG8s \" epruleciceis,",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 14,
+          "edicoes_palavras": 4,
+          "CER": 0.4666666666666667,
+          "WER": 1.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 14,
+          "edicoes_palavras": 4,
+          "CER": 0.4666666666666667,
+          "WER": 1.0
+        }
+      }
+    },
+    {
+      "id": "m05_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_05\\linha_01_limpa.png",
+      "sha256_recorte": "c974578d9ca2dea916809f24c979eab55a11a7da40b4cc0011d13a07567e7bf9",
+      "referencia": "No Livro \"Memórias",
+      "bruto": "NO CNIS MCnóriaS",
+      "corrigido": "NO CNIS MCnóriaS",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 2,
+          "CER": 0.4117647058823529,
+          "WER": 0.6666666666666666
+        },
+        "corrigido": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 2,
+          "CER": 0.4117647058823529,
+          "WER": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "id": "m05_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_05\\linha_02_limpa.png",
+      "sha256_recorte": "83c89d01afd12d045f4a34fe81123693bb1dd60ab6f3c939c7f22828dc54d4f6",
+      "referencia": "Póstumas de Brás Cubas\",",
+      "bruto": "Postumas de Bras Cubas,",
+      "corrigido": "Postumas de Bras Cubas,",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 2,
+          "CER": 0.09090909090909091,
+          "WER": 0.5
+        },
+        "corrigido": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 2,
+          "CER": 0.09090909090909091,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m05_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_05\\linha_03_limpa.png",
+      "sha256_recorte": "8fb764387d89a8ad09d9a9821a99426861bc2c6728bd0cbd734f5470f354d399",
+      "referencia": "O autor faz uma crítica",
+      "bruto": "O autor foz uma OnTic",
+      "corrigido": "O autor foz uma OnTic",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 5,
+          "edicoes_palavras": 2,
+          "CER": 0.21739130434782608,
+          "WER": 0.4
+        },
+        "corrigido": {
+          "edicoes_caracteres": 5,
+          "edicoes_palavras": 2,
+          "CER": 0.21739130434782608,
+          "WER": 0.4
+        }
+      }
+    },
+    {
+      "id": "m05_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_05\\linha_04_limpa.png",
+      "sha256_recorte": "612d653a5dadb695cccdc05b29ac7eb9891ebd285f4e8239626c16fada6010bb",
+      "referencia": "a conceitos como o Darwinismo",
+      "bruto": "O CnCeitos Opo O DirlinsMo",
+      "corrigido": "O CnCeitos Opo O DirlinsMo",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 4,
+          "CER": 0.2413793103448276,
+          "WER": 0.8
+        },
+        "corrigido": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 4,
+          "CER": 0.2413793103448276,
+          "WER": 0.8
+        }
+      }
+    },
+    {
+      "id": "m05_l05",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_05\\linha_05_limpa.png",
+      "sha256_recorte": "7f47f59bb2d8db2d98aefdd61c34ca3236cb1db4c370a2c4548c6b0e4c9faae9",
+      "referencia": "Social por meio do personagem",
+      "bruto": "Socia por mão do pelsofagêm",
+      "corrigido": "Socia por mão do pelsofagêm",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 6,
+          "edicoes_palavras": 3,
+          "CER": 0.20689655172413793,
+          "WER": 0.6
+        },
+        "corrigido": {
+          "edicoes_caracteres": 6,
+          "edicoes_palavras": 3,
+          "CER": 0.20689655172413793,
+          "WER": 0.6
+        }
+      }
+    },
+    {
+      "id": "m05_l06",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_05\\linha_06_limpa.png",
+      "sha256_recorte": "d44add96be51f2901004baca15e7c9ff2d93a100410696a19301b65567d99475",
+      "referencia": "Quincas Borbas.",
+      "bruto": "uincas Porbas.",
+      "corrigido": "quincas pombas.",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 2,
+          "CER": 0.14285714285714285,
+          "WER": 1.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 1,
+          "CER": 0.14285714285714285,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m06_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_06\\linha_01_limpa.png",
+      "sha256_recorte": "d51839213b23aa5725b444eec142bf8d68eaa2500f429f92648aa75ba246c50c",
+      "referencia": "A série \"Bem vindos a Derry\" narra a",
+      "bruto": "A nérie. Cm uidos a abvey\" novia a",
+      "corrigido": "A nérie. Cm idos a abvey\" novia a",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 12,
+          "edicoes_palavras": 5,
+          "CER": 0.35294117647058826,
+          "WER": 0.625
+        },
+        "corrigido": {
+          "edicoes_caracteres": 12,
+          "edicoes_palavras": 5,
+          "CER": 0.35294117647058826,
+          "WER": 0.625
+        }
+      }
+    },
+    {
+      "id": "m06_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_06\\linha_02_limpa.png",
+      "sha256_recorte": "c7b04a3ff4ad5d9e9ed426799329145472916ca351e8b4a5751d955db64f58f8",
+      "referencia": "história de um grupo de crianças que",
+      "bruto": "Pistéória de um gripo de criançasa",
+      "corrigido": "Pistéória de um gripo de criançada",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 4,
+          "CER": 0.19444444444444445,
+          "WER": 0.5714285714285714
+        },
+        "corrigido": {
+          "edicoes_caracteres": 8,
+          "edicoes_palavras": 4,
+          "CER": 0.2222222222222222,
+          "WER": 0.5714285714285714
+        }
+      }
+    },
+    {
+      "id": "m06_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_06\\linha_03_limpa.png",
+      "sha256_recorte": "ca6e604465359571246728608ea50c1714db8743b19c2123aeb588f2c0f008c2",
+      "referencia": "devem enfrentar uma força cósmica",
+      "bruto": "devem anfrentar uma força comica",
+      "corrigido": "devem anfrentar uma força comica",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 3,
+          "edicoes_palavras": 2,
+          "CER": 0.09090909090909091,
+          "WER": 0.4
+        },
+        "corrigido": {
+          "edicoes_caracteres": 3,
+          "edicoes_palavras": 2,
+          "CER": 0.09090909090909091,
+          "WER": 0.4
+        }
+      }
+    },
+    {
+      "id": "m06_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_06\\linha_04_limpa.png",
+      "sha256_recorte": "cae60a23443fb82aed05c988d97f35b6068e86bd562562e4124681a4f728a6fb",
+      "referencia": "maligna, Pennywise. A história se passa",
+      "bruto": "maligra. Pornaigenee A af4 \"\"",
+      "corrigido": "maligna. Pornaigenee A af4 \"\"",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 23,
+          "edicoes_palavras": 5,
+          "CER": 0.6216216216216216,
+          "WER": 0.8333333333333334
+        },
+        "corrigido": {
+          "edicoes_caracteres": 22,
+          "edicoes_palavras": 4,
+          "CER": 0.5945945945945946,
+          "WER": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "id": "m06_l05",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_06\\linha_05_limpa.png",
+      "sha256_recorte": "519883d2ec9dcc987f4f7bf3f6cbb27ac55ad28fc35cc6d8979e4bdd17d6aee6",
+      "referencia": "27 anos antes do primeiro filme.",
+      "bruto": "as amos antes do primiro filmo",
+      "corrigido": "as amos antes do primeiro filmo",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 5,
+          "edicoes_palavras": 4,
+          "CER": 0.16129032258064516,
+          "WER": 0.6666666666666666
+        },
+        "corrigido": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 3,
+          "CER": 0.12903225806451613,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m07_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_07\\linha_01_limpa.png",
+      "sha256_recorte": "cfa96cef4224258b9e9fde460c626a070b2eb0f609672c77c9248bc11180ab86",
+      "referencia": "Os dinossauros foram répteis",
+      "bruto": "Os divmios fram sfi-",
+      "corrigido": "Os divmios gram sfi-",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 14,
+          "edicoes_palavras": 3,
+          "CER": 0.5,
+          "WER": 0.75
+        },
+        "corrigido": {
+          "edicoes_caracteres": 15,
+          "edicoes_palavras": 3,
+          "CER": 0.5357142857142857,
+          "WER": 0.75
+        }
+      }
+    },
+    {
+      "id": "m07_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_07\\linha_02_limpa.png",
+      "sha256_recorte": "6cd0cabc5b03755e0f08104ed8905cbed690843160aa6bdb6ecc7363844833e7",
+      "referencia": "que dominaram a Terra durante milhares",
+      "bruto": "que deminoram a Tesa durante milhiares",
+      "corrigido": "que deminoram a Tesa durante milhiares",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 5,
+          "edicoes_palavras": 3,
+          "CER": 0.13157894736842105,
+          "WER": 0.5
+        },
+        "corrigido": {
+          "edicoes_caracteres": 5,
+          "edicoes_palavras": 3,
+          "CER": 0.13157894736842105,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m07_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_07\\linha_03_limpa.png",
+      "sha256_recorte": "cfcb7e097214d1494c9b0312c0f09d92c1c3b9946eb19ddc539f25f68df7c646",
+      "referencia": "de anos, na Era Mesozoica que é dividida",
+      "bruto": "de asa, na Es Mesog oico que é divedida-",
+      "corrigido": "de asa, na Es meso oico que é dividida-",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 9,
+          "edicoes_palavras": 5,
+          "CER": 0.23076923076923078,
+          "WER": 0.625
+        },
+        "corrigido": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 4,
+          "CER": 0.1794871794871795,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m07_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_07\\linha_04_limpa.png",
+      "sha256_recorte": "aa58741d9eaf1c4bdfa0d913fbd3c55b2f3d9e602a389a707af5ebb14355481f",
+      "referencia": "em 3: Triássico, Jurássico e Cretáceo.",
+      "bruto": "em J Tiássica, diuanião e Cetado.",
+      "corrigido": "em J Tiássica, diuanião e Cetado.",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 14,
+          "edicoes_palavras": 4,
+          "CER": 0.4,
+          "WER": 0.6666666666666666
+        },
+        "corrigido": {
+          "edicoes_caracteres": 14,
+          "edicoes_palavras": 4,
+          "CER": 0.4,
+          "WER": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "id": "m08_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_08\\linha_01_limpa.png",
+      "sha256_recorte": "e91da324c87f2ce247778996cb3c9701482f219f676de4c25ecbfbe29aa96f7b",
+      "referencia": "O fato de Celestino se lembrar",
+      "bruto": "O ferto de Calestino se inbrar",
+      "corrigido": "O ferto de Calestino se inorar",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 6,
+          "edicoes_palavras": 3,
+          "CER": 0.2,
+          "WER": 0.5
+        },
+        "corrigido": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 3,
+          "CER": 0.23333333333333334,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m08_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_08\\linha_02_limpa.png",
+      "sha256_recorte": "91143d7b3d5481d83cd7d6033c37ecc0f08d2a1b21e3e61e3f9078faa7c057bf",
+      "referencia": "da holandesa revela que, apesar de",
+      "bruto": "do Delondera renela que, a pesar de",
+      "corrigido": "do Delondera renela que, a pesar de",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 5,
+          "CER": 0.21212121212121213,
+          "WER": 0.8333333333333334
+        },
+        "corrigido": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 5,
+          "CER": 0.21212121212121213,
+          "WER": 0.8333333333333334
+        }
+      }
+    },
+    {
+      "id": "m08_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_08\\linha_03_limpa.png",
+      "sha256_recorte": "21310c417e6ff4e0489878f6f14864fbf5d4ea27e5c7841dcab3147e50fd5178",
+      "referencia": "não admitir culpa, é perturbado por",
+      "bruto": "não admitir culpo, é porturhadoa",
+      "corrigido": "não admitir culpo, é porturhadoa",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 3,
+          "CER": 0.20588235294117646,
+          "WER": 0.5
+        },
+        "corrigido": {
+          "edicoes_caracteres": 7,
+          "edicoes_palavras": 3,
+          "CER": 0.20588235294117646,
+          "WER": 0.5
+        }
+      }
+    },
+    {
+      "id": "m08_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_08\\linha_04_limpa.png",
+      "sha256_recorte": "4d3ff122a8bd935ccc92e2ef719a9d57a52cfacc5b851cca1358204785fc7cf0",
+      "referencia": "suas ações passadas.",
+      "bruto": "suas ações passadas",
+      "corrigido": "suas nações passada",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 0,
+          "edicoes_palavras": 0,
+          "CER": 0.0,
+          "WER": 0.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 2,
+          "CER": 0.10526315789473684,
+          "WER": 0.6666666666666666
+        }
+      }
+    },
+    {
+      "id": "m09_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_09\\linha_02_limpa.png",
+      "sha256_recorte": "3ffd08e712377bdf5825c1cd87a3fbaef2606a5718ef5dc1623c832b97cb454d",
+      "referencia": "dirigida pelo diretor David Lynch em meados de 1999",
+      "bruto": "desgidas alo diveto Devid poido em modos de fina",
+      "corrigido": "desgidas alo diveto Devid poido em modos de fina",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 20,
+          "edicoes_palavras": 7,
+          "CER": 0.39215686274509803,
+          "WER": 0.7777777777777778
+        },
+        "corrigido": {
+          "edicoes_caracteres": 20,
+          "edicoes_palavras": 7,
+          "CER": 0.39215686274509803,
+          "WER": 0.7777777777777778
+        }
+      }
+    },
+    {
+      "id": "m09_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_09\\linha_03_limpa.png",
+      "sha256_recorte": "a47772c1bac54960601fd37be4fd9d8cb75fdce5e125fc808ff1b71693b0bb00",
+      "referencia": "e se trata da investigação de um assassinato em",
+      "bruto": "e se tiata da cmnestigção de um essssnto em",
+      "corrigido": "e se tiata da cmnestigção de um essssnto em",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 9,
+          "edicoes_palavras": 3,
+          "CER": 0.19148936170212766,
+          "WER": 0.3333333333333333
+        },
+        "corrigido": {
+          "edicoes_caracteres": 9,
+          "edicoes_palavras": 3,
+          "CER": 0.19148936170212766,
+          "WER": 0.3333333333333333
+        }
+      }
+    },
+    {
+      "id": "m09_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_09\\linha_04_limpa.png",
+      "sha256_recorte": "fe6df245b6f5cf085fd87318b7638a739235a3db57bc899664776131144650c2",
+      "referencia": "uma pacata cidade que se revela misteriosa.",
+      "bruto": "uma pude cidade que se aola nestarssa",
+      "corrigido": "uma pude cidade que se aola nestarssa",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 14,
+          "edicoes_palavras": 3,
+          "CER": 0.3333333333333333,
+          "WER": 0.42857142857142855
+        },
+        "corrigido": {
+          "edicoes_caracteres": 14,
+          "edicoes_palavras": 3,
+          "CER": 0.3333333333333333,
+          "WER": 0.42857142857142855
+        }
+      }
+    },
+    {
+      "id": "m10_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_10\\linha_01_limpa.png",
+      "sha256_recorte": "e61555021bb02610b4ea69463d6b81dc588f2cab8d252ae5fb1820bfb4ed0b34",
+      "referencia": "O Miguel Lopes, também conhecido",
+      "bruto": "O Miquil oões, tabém coniteis",
+      "corrigido": "O Miquil oões, também coniteis",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 10,
+          "edicoes_palavras": 4,
+          "CER": 0.3225806451612903,
+          "WER": 0.8
+        },
+        "corrigido": {
+          "edicoes_caracteres": 9,
+          "edicoes_palavras": 3,
+          "CER": 0.2903225806451613,
+          "WER": 0.6
+        }
+      }
+    },
+    {
+      "id": "m10_l02",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_10\\linha_02_limpa.png",
+      "sha256_recorte": "7fd133f4cead51c53dd03b7ddabf1fa16853e9dfc1510b3bf8e4f7f5b413ae2f",
+      "referencia": "como Miguel Pops, é o representante",
+      "bruto": " como Miqul Pop, é o representant",
+      "corrigido": " como Miqul Pop, é o representante",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 3,
+          "CER": 0.11764705882352941,
+          "WER": 0.5
+        },
+        "corrigido": {
+          "edicoes_caracteres": 3,
+          "edicoes_palavras": 2,
+          "CER": 0.08823529411764706,
+          "WER": 0.3333333333333333
+        }
+      }
+    },
+    {
+      "id": "m10_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_10\\linha_03_limpa.png",
+      "sha256_recorte": "9054157f5bd65b497621a1616107f2c9c615f715a29f20f1d7210ddea30ca79c",
+      "referencia": "de sala do terceiro ano do curso de",
+      "bruto": "de soba do terceiro aso do ccurso de",
+      "corrigido": "de soba do terceiro aso do curso de",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 4,
+          "edicoes_palavras": 3,
+          "CER": 0.11428571428571428,
+          "WER": 0.375
+        },
+        "corrigido": {
+          "edicoes_caracteres": 3,
+          "edicoes_palavras": 2,
+          "CER": 0.08571428571428572,
+          "WER": 0.25
+        }
+      }
+    },
+    {
+      "id": "m10_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_10\\linha_04_limpa.png",
+      "sha256_recorte": "2ae2ac1e51e9f7e39fb7db9b92b7767e4131dfcecdd8f101298adf44a0bfe157",
+      "referencia": "informática.",
+      "bruto": "informática.",
+      "corrigido": "informática.",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 0,
+          "edicoes_palavras": 0,
+          "CER": 0.0,
+          "WER": 0.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 0,
+          "edicoes_palavras": 0,
+          "CER": 0.0,
+          "WER": 0.0
+        }
+      }
+    },
+    {
+      "id": "m11_l01",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_11\\linha_01_limpa.png",
+      "sha256_recorte": "474b8284f258010d3d3410b484b1eb6f25b5d0314cccf25aa4628c4d0c857ec7",
+      "referencia": "informática.",
+      "bruto": "nfgrmática",
+      "corrigido": "nfgrmática",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 1,
+          "CER": 0.18181818181818182,
+          "WER": 1.0
+        },
+        "corrigido": {
+          "edicoes_caracteres": 2,
+          "edicoes_palavras": 1,
+          "CER": 0.18181818181818182,
+          "WER": 1.0
+        }
+      }
+    },
+    {
+      "id": "m11_l03",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_11\\linha_03_limpa.png",
+      "sha256_recorte": "bccd0acb27534b3529f6adf51311fb2e0ac1c84167d86e1cb9f095f1b1b694a1",
+      "referencia": "dirigida pelo diretor David Lynch em meados de 1999",
+      "bruto": "lizido palo disto. Duil puito em moidos de 1o99",
+      "corrigido": "lizido palo disto. Duil puito em moidos de 1o99",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 20,
+          "edicoes_palavras": 7,
+          "CER": 0.39215686274509803,
+          "WER": 0.7777777777777778
+        },
+        "corrigido": {
+          "edicoes_caracteres": 20,
+          "edicoes_palavras": 7,
+          "CER": 0.39215686274509803,
+          "WER": 0.7777777777777778
+        }
+      }
+    },
+    {
+      "id": "m11_l04",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_11\\linha_04_limpa.png",
+      "sha256_recorte": "375207b80d0938670f744ab1150ffe3fae0d94523037d0f65b378b2d02589e98",
+      "referencia": "e se trata da investigação de um assassinato em",
+      "bruto": "e de trata da conestizaão de um ressanto e",
+      "corrigido": "e de trata da conestizaão de um ressalto e",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 13,
+          "edicoes_palavras": 4,
+          "CER": 0.2765957446808511,
+          "WER": 0.4444444444444444
+        },
+        "corrigido": {
+          "edicoes_caracteres": 14,
+          "edicoes_palavras": 4,
+          "CER": 0.2978723404255319,
+          "WER": 0.4444444444444444
+        }
+      }
+    },
+    {
+      "id": "m11_l05",
+      "imagem": "C:\\Users\\Admin\\Documents\\GitHub\\LexrecoverIA\\ia_letras_e_alg\\opencv\\recortes_revisao\\20260919_214951_281022\\manuscrito_11\\linha_05_limpa.png",
+      "sha256_recorte": "8017d74a67e092cf10cc069815bed416a8dd081f5b2684bcd40a2e8fd848293c",
+      "referencia": "uma pacata cidade que se revela misteriosa.",
+      "bruto": " uma punta cidade que se avela mestavoma",
+      "corrigido": " uma punta cidade que se avela mestavoma",
+      "medidas": {
+        "bruto": {
+          "edicoes_caracteres": 10,
+          "edicoes_palavras": 3,
+          "CER": 0.23809523809523808,
+          "WER": 0.42857142857142855
+        },
+        "corrigido": {
+          "edicoes_caracteres": 10,
+          "edicoes_palavras": 3,
+          "CER": 0.23809523809523808,
+          "WER": 0.42857142857142855
+        }
+      }
+    }
+  ]
+}

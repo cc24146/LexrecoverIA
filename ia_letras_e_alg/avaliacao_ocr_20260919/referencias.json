@@ -1,0 +1,492 @@
+{
+  "schema_version": 2,
+  "date": "2026-09-19",
+  "status": "proposta revisada visualmente; não aprovada para treinamento",
+  "purpose": "avaliação de desenvolvimento; não teste independente",
+  "provenance": "Imagens atuais inspecionadas em disco. Saídas transcritas das mensagens do usuário, com quebras de linha convertidas em espaços. Hashes são dos arquivos atuais, não prova dos arquivos utilizados nas execuções antigas.",
+  "normalization": "NFC, minúsculas, substituir cada caractere não letra/número/espaço por espaço, compactar espaços. Preservar acentos e números.",
+  "checkpoint_sha256": "56BFBE9F0B7B47582C6A6988A83A88B67B9F440AE18307D99BC58D29147C6B75",
+  "samples": [
+    {
+      "id": 1,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 1.jpeg",
+      "current_image_sha256": "5BC96B360A89F06CB3D0D423A6FA1F04C86B9BCDCD30E1FDF43378F606A02B94",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "texto_1",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Sem ponto final visível. Caixa alta preservada na proposta.",
+      "reference_lines": [
+        {
+          "id": "m01_l01",
+          "text": "VOCÊ NÃO VAI ACREDITAR",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m01_l02",
+          "text": "MAS VOCÊ CABIA AQUI",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "voce não val agpgo? MA5 voue(Mbia ari",
+      "corrected_output_joined": "voce não val agpgo? MA5 vote(Mbia ari"
+    },
+    {
+      "id": 2,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 2.jpeg",
+      "current_image_sha256": "696E22788ECBCED724CDC674E884E0058F78B6A6860D7AC5BED39AD4209DED93",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "cancoes",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Usuário confirmou Ninar. Restante da referência proposta por inspeção visual.",
+      "reference_lines": [
+        {
+          "id": "m02_l01",
+          "text": "Minha mão não soa",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m02_l02",
+          "text": "Como sua bunda",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m02_l03",
+          "text": "Canções Para Ninar",
+          "crop_path": null,
+          "approved": false,
+          "confirmed_by_user": true
+        },
+        {
+          "id": "m02_l04",
+          "text": "Menino Grande",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m02_l05",
+          "text": "Vinicius Guedes Pinheiro",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "DDinha mão não 30a Como sua bunda Counções Para Himar Menino Graandle inícios Quedes Pinheiro",
+      "corrected_output_joined": "DDinha mão não 30a Como sua bunda Counções Para Himar Menino Graandle início quede Pinheiro"
+    },
+    {
+      "id": 3,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 3.jpeg",
+      "current_image_sha256": "FC2519D74782ADF2428F2B4CAC4C686312550F276D17D592AA5D8D57C4B6B935",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "cancoes",
+      "human_approved": false,
+      "source_match_status": "confirmed_image_cropped_after_run",
+      "include_in_primary_provisional_metrics": false,
+      "notes": "Usuário confirmou que recortou a imagem para remover texto vizinho. Confirmou Ninar e Pinheiro sem s final. Saídas antigas pertencem à versão anterior ao recorte e são apenas histórico; não comparar com a imagem atual.",
+      "reference_lines": [
+        {
+          "id": "m03_l01",
+          "text": "Minha mão não soa",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m03_l02",
+          "text": "Como sua bunda",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m03_l03",
+          "text": "Canções Para Ninar",
+          "crop_path": null,
+          "approved": false,
+          "confirmed_by_user": true
+        },
+        {
+          "id": "m03_l04",
+          "text": "Menino Grande",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m03_l05",
+          "text": "Vinicius Guedes Pinheiro",
+          "crop_path": null,
+          "approved": false,
+          "confirmed_fields_by_user": [
+            "sobrenome Pinheiro (sem s final)"
+          ]
+        }
+      ],
+      "raw_output_joined": null,
+      "corrected_output_joined": null,
+      "historical_output": {
+        "raw_output_joined": "Munha mão não soa A Como sea luntio Coanções Para Minar m Memimo grande Cimsaias Guelos Puliera-",
+        "corrected_output_joined": "Munha mão não soa A Como sea luntio Coanções Para Minar m Memimo grande Cimsaias Guelos Puliera-",
+        "source_version": "anterior ao recorte confirmado pelo usuário",
+        "use_for_current_metrics": false
+      }
+    },
+    {
+      "id": 4,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 4.jpeg",
+      "current_image_sha256": "711C0E0711C0C5A4BB7B7890538CEECFADCEE8342951E26A97321332C6367A29",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "texto_4",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Manter grafia da imagem sem acrescentar acentos a musicas/unicas/inesqueciveis. Capitalização mista requer validação humana. Uma região extra na saída.",
+      "reference_lines": [
+        {
+          "id": "m04_l01",
+          "text": "A Taylor Swift é uma das",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m04_l02",
+          "text": "melhores cantoras do mundo competindo",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m04_l03",
+          "text": "Unicamente com Lana del Rey e",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m04_l04",
+          "text": "Kanye West com suas",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m04_l05",
+          "text": "musicas unicas e inesqueciveis",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "A Juja Smio é um dos \" fa melhores cansoros do mundo compesndo inomento com cane del Poy e fanje Nisse com sams mosicas gAG8s \" epruleciceis,",
+      "corrected_output_joined": "A Juja Smio é um dos \" fa melhores cansoros do mundo compesndo inomento com cane del Poy e fanje Nisse com sams mosicas gAG8s \" epruleciceis,"
+    },
+    {
+      "id": 5,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 5.jpeg",
+      "current_image_sha256": "BEE1656680966ABB8F00770A0288E99F7BB987AB23F7CEF81E0A17A887E0306D",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "texto_5",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Preservar Borbas no plural, sem corrigir para Borba. Aspas e capitalização propostas para revisão.",
+      "reference_lines": [
+        {
+          "id": "m05_l01",
+          "text": "No Livro \"Memórias",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m05_l02",
+          "text": "Póstumas de Brás Cubas\",",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m05_l03",
+          "text": "O autor faz uma crítica",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m05_l04",
+          "text": "a conceitos como o Darwinismo",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m05_l05",
+          "text": "Social por meio do personagem",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m05_l06",
+          "text": "Quincas Borbas.",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "NO CNIS MCnóriaS Postumas de Bras Cubas, O autor foz uma OnTic O CnCeitos Opo O DirlinsMo Socia por mão do pelsofagêm uincas Porbas.",
+      "corrected_output_joined": "NO CNIS MCnóriaS Postumas de Bras Cubas, O autor foz uma OnTic O CnCeitos Opo O DirlinsMo Socia por mão do pelsofagêm quincas pombas."
+    },
+    {
+      "id": 6,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 6.jpeg",
+      "current_image_sha256": "1EDEE4C8E15DB94C059E3362E2FC046A8F8B8011DCB65376F8273BFA4B0F6D1C",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "texto_6",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Confirmar grafia de Pennywise e Derry. Há fragmento de outro texto na borda superior; não incluído na referência principal.",
+      "reference_lines": [
+        {
+          "id": "m06_l01",
+          "text": "A série \"Bem vindos a Derry\" narra a",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m06_l02",
+          "text": "história de um grupo de crianças que",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m06_l03",
+          "text": "devem enfrentar uma força cósmica",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m06_l04",
+          "text": "maligna, Pennywise. A história se passa",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m06_l05",
+          "text": "27 anos antes do primeiro filme.",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "A nérie. Cm uidos a abvey\" novia a Pistéória de um gripo de criançasa devem anfrentar uma força comica maligra. Pornaigenee A af4 \"\" as amos antes do primiro filmo",
+      "corrected_output_joined": "A nérie. Cm idos a abvey\" novia a Pistéória de um gripo de criançada devem anfrentar uma força comica maligna. Pornaigenee A af4 \"\" as amos antes do primeiro filmo"
+    },
+    {
+      "id": 7,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 7.jpeg",
+      "current_image_sha256": "3F1ECCDF3CAADA57820CC2AE820A8E915CCCD073F7A3CE6763D0D054CD9532EF",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "texto_7",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Preservar milhares e grafias escritas, sem correção factual. Revisar acentos e pontuação.",
+      "reference_lines": [
+        {
+          "id": "m07_l01",
+          "text": "Os dinossauros foram répteis",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m07_l02",
+          "text": "que dominaram a Terra durante milhares",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m07_l03",
+          "text": "de anos, na Era Mesozoica que é dividida",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m07_l04",
+          "text": "em 3: Triássico, Jurássico e Cretáceo.",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "Os divmios fram sfi- que deminoram a Tesa durante milhiares de asa, na Es Mesog oico que é divedida- em J Tiássica, diuanião e Cetado.",
+      "corrected_output_joined": "Os divmios gram sfi- que deminoram a Tesa durante milhiares de asa, na Es meso oico que é dividida- em J Tiássica, diuanião e Cetado."
+    },
+    {
+      "id": 8,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 8.jpeg",
+      "current_image_sha256": "BA4048B74EBD6A7D16FA97C75160C2491A0C673D0DBBC75CA297BCF370DA27DF",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "texto_8",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Referência compatível com texto fornecido pelo usuário; espaços junto à pontuação normalizados.",
+      "reference_lines": [
+        {
+          "id": "m08_l01",
+          "text": "O fato de Celestino se lembrar",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m08_l02",
+          "text": "da holandesa revela que, apesar de",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m08_l03",
+          "text": "não admitir culpa, é perturbado por",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m08_l04",
+          "text": "suas ações passadas.",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "O ferto de Calestino se inbrar do Delondera renela que, a pesar de não admitir culpo, é porturhadoa suas ações passadas",
+      "corrected_output_joined": "O ferto de Calestino se inorar do Delondera renela que, a pesar de não admitir culpo, é porturhadoa suas nações passada"
+    },
+    {
+      "id": 9,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 9.jpeg",
+      "current_image_sha256": "65D9FB6D5B2E0EB7372EF4F3D5158956E645B842CDC44DD9AD20FB5139E0FA62",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "quadro_twin_peaks_miguel",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Preservar 1999. Parte das aspas pode ter sido excluída pelo detector.",
+      "reference_lines": [
+        {
+          "id": "m09_l01",
+          "text": "\"Twin Peaks\" é uma série de TV americana",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m09_l02",
+          "text": "dirigida pelo diretor David Lynch em meados de 1999",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m09_l03",
+          "text": "e se trata da investigação de um assassinato em",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m09_l04",
+          "text": "uma pacata cidade que se revela misteriosa.",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "\"um Poia o uu ciedno man- desgidas alo diveto Devid poido em modos de fina e se tiata da cmnestigção de um essssnto em uma pude cidade que se aola nestarssa",
+      "corrected_output_joined": "\"um Poia o uu ciedno man- desgidas alo diveto Devid poido em modos de fina e se tiata da cmnestigção de um essssnto em uma pude cidade que se aola nestarssa"
+    },
+    {
+      "id": 10,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 10.jpeg",
+      "current_image_sha256": "7321024C211CE0FD115432D32A5604A39AFF7A752544B754E21775747734E8C1",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "quadro_twin_peaks_miguel",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Referência visual prevalece sobre erros de digitação da mensagem antiga: representante e informática.",
+      "reference_lines": [
+        {
+          "id": "m10_l01",
+          "text": "O Miguel Lopes, também conhecido",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m10_l02",
+          "text": "como Miguel Pops, é o representante",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m10_l03",
+          "text": "de sala do terceiro ano do curso de",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m10_l04",
+          "text": "informática.",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "O Miquil oões, tabém coniteis como Miqul Pop, é o representant de soba do terceiro aso do ccurso de informática.",
+      "corrected_output_joined": "O Miquil oões, também coniteis como Miqul Pop, é o representante de soba do terceiro aso do curso de informática."
+    },
+    {
+      "id": 11,
+      "image_path": "C:/Users/Admin/Documents/GitHub/LexrecoverIA/ia_letras_e_alg/opencv/imagens/manuscrito 11.jpeg",
+      "current_image_sha256": "3F72B3BC8E2856538EFDEF5E1A320F3A6BECF76E44A10C49AD8030B0615E696D",
+      "writer_id": null,
+      "split": "development",
+      "related_content_group": "quadro_twin_peaks_miguel",
+      "human_approved": false,
+      "source_match_status": "not_cryptographically_verified_for_past_run",
+      "include_in_primary_provisional_metrics": true,
+      "notes": "Contém informática de outro parágrafo e texto repetido do manuscrito 9. Fragmento cortado no limite superior excluído. Preservar 1999.",
+      "reference_lines": [
+        {
+          "id": "m11_l01",
+          "text": "informática.",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m11_l02",
+          "text": "\"Twin Peaks\" é uma série de TV americana",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m11_l03",
+          "text": "dirigida pelo diretor David Lynch em meados de 1999",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m11_l04",
+          "text": "e se trata da investigação de um assassinato em",
+          "crop_path": null,
+          "approved": false
+        },
+        {
+          "id": "m11_l05",
+          "text": "uma pacata cidade que se revela misteriosa.",
+          "crop_path": null,
+          "approved": false
+        }
+      ],
+      "raw_output_joined": "nfgrmática Lum Pois s u socino pan- lizido palo disto. Duil puito em moidos de 1o99 e de trata da conestizaão de um ressanto e uma punta cidade que se avela mestavoma",
+      "corrected_output_joined": "nfgrmática Lum Pois s u súcino pan- lizido palo disto. Duil puito em moidos de 1o99 e de trata da conestizaão de um ressalto e uma punta cidade que se avela mestavoma"
+    }
+  ]
+}

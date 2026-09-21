@@ -141,7 +141,8 @@ class ReconhecedorCTC:
 
     def reconhecer(
         self,
-        imagem
+        imagem,
+        caminho_debug=None
     ):
 
         imagem_tensor = (
@@ -152,6 +153,26 @@ class ReconhecedorCTC:
 
         if imagem_tensor is None:
             return ""
+        
+        
+        if caminho_debug is not None:
+            entrada = (
+                imagem_tensor[0, 0]
+                .detach()
+                .cpu()
+                .numpy()
+            )
+
+            entrada_png = np.clip(
+                np.rint(entrada * 255.0),
+                0,
+                255
+            ).astype(np.uint8)
+
+            if not cv2.imwrite(caminho_debug, entrada_png):
+                raise OSError(
+                    f"Não foi possível salvar: {caminho_debug}"
+                )
 
         largura = (
             imagem_tensor.shape[3]

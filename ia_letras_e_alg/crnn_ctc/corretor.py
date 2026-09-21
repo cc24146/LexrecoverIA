@@ -37,7 +37,7 @@ def distancia_levenshtein(s1: str, s2: str) -> int:
 
         distancia_anterior = distancia_atual
 
-        return distancia_anterior[-1]
+    return distancia_anterior[-1]
 
 def corrigir_palavra(palavra):
 
@@ -87,6 +87,9 @@ def corrigir_palavra(palavra):
 
     if palavra_limpa in DICIONARIO:
         return texto_original
+    
+    if len(palavra_limpa) <= 3:
+        return texto_original
 
     candidatos = [
         p for p in DICIONARIO
@@ -96,13 +99,116 @@ def corrigir_palavra(palavra):
     if not candidatos:
         return texto_original
 
-    melhor_palavra = min(
-        candidatos,
-        key = lambda p: distancia_levenshtein(palavra_limpa, p)
+    distancias = [
+        (
+            candidato,
+            distancia_levenshtein(
+                palavra_limpa,
+                candidato
+            )
+        )
+        for candidato in candidatos
+    ]
+
+    menor_distancia = min(
+        distancia
+        for _, distancia in distancias
     )
 
-    limiar = max(2, len(palavra_limpa) // 3)
-    if distancia_levenshtein(palavra_limpa, melhor_palavra) <= limiar:
-        return melhor_palavra.upper() if texto_original.isupper else melhor_palavra
+    melhores_candidatos = [
+        candidato
+        for candidato, distancia in distancias
+        if distancia == menor_distancia
+    ]
+
+    if len(melhores_candidatos) != 1:
+        return texto_original
+
+    melhor_palavra = melhores_candidatos[0]
+
+    limiar = 1
+
+    if menor_distancia <= limiar:
+        if texto_original.isupper():
+            return melhor_palavra.upper()
+
+        return melhor_palavra
 
     return texto_original
+
+def analisar_palavra(palavra):
+    if not isinstance(palavra, str):
+        raise TypeError("A palavra deve ser uma string.")
+
+    resultado = {
+        "original": palavra,
+        "conhecida": False,
+        "candidatos": [],
+        "distancia": None,
+        "motivo": "",
+    }
+
+    if not palavra:
+        resultado["motivo"] = "entrada_vazia"
+        return resultado
+
+    if not DICIONARIO:
+        resultado["motivo"] = "dicionario_vazio"
+        return resultado
+
+    palavra_normalizada = palavra.lower()
+
+    if palavra_normalizada in DICIONARIO:
+        resultado["conhecida"] = True
+        resultado["distancia"] = 0
+        resultado["motivo"] = "presente_no_lexico"
+        return resultado
+
+    if any(caractere.isdigit() for caractere in palavra):
+        resultado["motivo"] = "contem_numero"
+        return resultado
+
+    if len(palavra_normalizada) <= 3:
+        resultado["motivo"] = "palavra_curta"
+        return resultado
+
+    candidatos = []
+
+    for candidato in DICIONARIO:
+        if abs(len(candidato) - len(palavra_normalizada)) > 1:
+            continue
+
+        distancia = distancia_levenshtein(
+            palavra_normalizada,
+            candidato
+        )
+
+        if distancia == 1:
+            candidatos.append(candidato)
+
+    candidatos.sort()
+
+    if palavra.isupper():
+        candidatos = [
+            candidato.upper()
+            for candidato in candidatos
+        ]
+    elif palavra.istitle():
+        candidatos = [
+            candidato.capitalize()
+            for candidato in candidatos
+        ]
+
+    resultado["candidatos"] = candidatos
+
+    if not candidatos:
+        resultado["motivo"] = "sem_candidato_a_uma_edicao"
+    else:
+        resultado["distancia"] = 1
+        resultado["motivo"] = (
+            "candidato_unico"
+            if len(candidatos) == 1
+            else "multiplos_candidatos"
+        )
+
+    return resultado
