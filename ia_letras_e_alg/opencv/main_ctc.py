@@ -20,7 +20,7 @@ if PROJECT_ROOT not in sys.path:
 
 
 from opencv.reconhecimento_ctc import ReconhecedorCTC
-from crnn_ctc.pos_processamento import corrigir_texto
+from crnn_ctc.pos_processamento import analisar_texto
 
 def filtrar_pequenos_componentes(binaria):
     quantidade, rotulos, estatisticas, _ = (
@@ -531,15 +531,62 @@ def main():
     print("==============================")
     print(texto_bruto)
 
-    texto_corrigido = corrigir_texto(
-        texto_bruto
-    )
+    analise = analisar_texto(texto_bruto)
 
     print()
     print("==============================")
-    print("TEXTO CORRIGIDO (DICIONARIO)")
+    print("SUGESTÕES PARA REVISÃO")
     print("==============================")
-    print(texto_corrigido)
+
+    encontrou_sugestao = False
+
+    for palavra in analise["palavras"]:
+        candidatos = palavra["candidatos"]
+
+        if not candidatos:
+            continue
+
+        encontrou_sugestao = True
+
+        limite_exibicao = 5
+
+        opcoes = ", ".join(
+            candidatos[:limite_exibicao]
+        )
+
+        restantes = max(
+            0,
+            len(candidatos) - limite_exibicao
+        )
+
+        if palavra.get("presente_no_corpus", False):
+            situacao = (
+                "registrada no corpus; "
+                "não indica erro"
+            )
+        else:
+            situacao = (
+                "não encontrada nas listas consultadas"
+            )
+
+        print(
+            f'{palavra["original"]} '
+            f'[{situacao}]'
+        )
+
+        print(
+            f"  Alternativas: {opcoes}"
+        )
+        if restantes:
+            print(
+                f"  Outras {restantes} alternativas "
+                "não exibidas."
+            )
+
+    if not encontrou_sugestao:
+        print("Nenhuma sugestão encontrada.")
+
+    print("As sugestões não foram aplicadas ao texto bruto.")
 
     cv2.imshow(
         "Linhas detectadas - CTC",

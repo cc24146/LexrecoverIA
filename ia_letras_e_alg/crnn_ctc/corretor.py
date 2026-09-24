@@ -1,5 +1,7 @@
 from statistics import median
 import os
+import csv
+import math
 
 DIRETORIO_ATUAL = os.path.dirname(os.path.abspath(__file__))
 CAMINHO_LEXICO = os.path.join(DIRETORIO_ATUAL, "banco", "lexico.txt")
@@ -14,7 +16,59 @@ def carregar_dicionario(caminho_arquivo):
     
     return palavras
 
-DICIONARIO = carregar_dicionario(CAMINHO_LEXICO)
+CAMINHO_CONJUGACOES = os.path.join(
+    DIRETORIO_ATUAL,
+    "banco",
+    "conjugacoes.txt"
+)
+
+DICIONARIO = (
+    carregar_dicionario(CAMINHO_LEXICO)
+    | carregar_dicionario(CAMINHO_CONJUGACOES)
+)
+
+CAMINHO_ICF = os.path.join(
+    DIRETORIO_ATUAL,
+    "banco",
+    "icf.txt"
+)
+
+
+def carregar_icf(caminho):
+    frequencias = {}
+
+    with open(
+        caminho,
+        "r",
+        encoding="utf-8",
+        newline=""
+    ) as arquivo:
+        for numero, campos in enumerate(
+            csv.reader(arquivo),
+            start=1
+        ):
+            if not campos:
+                continue
+
+            if len(campos) != 2:
+                raise ValueError(
+                    f"Linha {numero} inválida no ICF."
+                )
+
+            palavra = campos[0].strip().lower()
+            pontuacao = float(campos[1])
+
+            if not palavra or not math.isfinite(pontuacao):
+                raise ValueError(
+                    f"Entrada inválida na linha {numero}."
+                )
+
+            frequencias[palavra] = pontuacao
+
+    return frequencias
+
+
+FREQUENCIAS_ICF = carregar_icf(CAMINHO_ICF)
 
 def distancia_levenshtein(s1: str, s2: str) -> int:
     if len(s1) > len(s2):
@@ -79,6 +133,15 @@ def corrigir_palavra(palavra):
 
     if not texto_original:
         return ""
+
+    if not texto_original.isalpha():
+        return texto_original
+
+    if any(
+        caractere.isupper()
+        for caractere in texto_original
+    ):
+        return texto_original
 
     if any(c.isdigit() for c in texto_original):
         return texto_original
@@ -163,6 +226,15 @@ def analisar_palavra(palavra):
         resultado["distancia"] = 0
         resultado["motivo"] = "presente_no_lexico"
         return resultado
+    
+    resultado["presente_no_corpus"] = (
+        palavra_normalizada in FREQUENCIAS_ICF
+    )
+
+    resultado["icf"] = FREQUENCIAS_ICF.get(
+        palavra_normalizada
+    )
+
 
     if any(caractere.isdigit() for caractere in palavra):
         resultado["motivo"] = "contem_numero"
@@ -175,7 +247,7 @@ def analisar_palavra(palavra):
     candidatos = []
 
     for candidato in DICIONARIO:
-        if abs(len(candidato) - len(palavra_normalizada)) > 1:
+        if abs(len(candidato) - len(palavra_normalizada)) > 2:
             continue
 
         distancia = distancia_levenshtein(
@@ -183,10 +255,22 @@ def analisar_palavra(palavra):
             candidato
         )
 
-        if distancia == 1:
+        if 1 <= distancia <= 2:
             candidatos.append(candidato)
 
-    candidatos.sort()
+    candidatos.sort(
+        key=lambda candidato: (
+            distancia_levenshtein(
+                palavra_normalizada,
+                candidato
+            ),
+            FREQUENCIAS_ICF.get(
+                candidato,
+                float("inf")
+            ),
+            candidato
+        )
+    )
 
     if palavra.isupper():
         candidatos = [
@@ -202,9 +286,15 @@ def analisar_palavra(palavra):
     resultado["candidatos"] = candidatos
 
     if not candidatos:
-        resultado["motivo"] = "sem_candidato_a_uma_edicao"
+        resultado["motivo"] = "sem_candidato_ate_duas_edicoes"
     else:
-        resultado["distancia"] = 1
+        resultado["distancia"] = min(
+            distancia_levenshtein(
+                palavra_normalizada,
+                candidato.lower()
+            )
+            for candidato in candidatos
+        )
         resultado["motivo"] = (
             "candidato_unico"
             if len(candidatos) == 1
