@@ -1,19 +1,18 @@
 import hashlib
 import json
 from datetime import datetime
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 import cv2
 
 from opencv.main_ctc import detectar_linhas, PROJECT_ROOT
 
 
-REFERENCIAS = Path(
-    r"C:\Users\Admin\.codex\.chatgpt-projects"
-    r"\g-p-6a7495fbdef08191a7b8f96807c971b2"
-    r"\avaliacao_ocr_20260919\referencias.json"
+REFERENCIAS = (
+    Path(PROJECT_ROOT)
+    / "avaliacao_ocr_20260919"
+    / "referencias.json"
 )
-
 
 def salvar_imagem(caminho, imagem):
     if not cv2.imwrite(str(caminho), imagem):
@@ -47,7 +46,16 @@ def main():
     registros = []
 
     for amostra in dados["samples"]:
-        origem = Path(amostra["image_path"])
+        nome_imagem = PureWindowsPath(
+            amostra["image_path"]
+        ).name
+
+        origem = (
+            Path(PROJECT_ROOT)
+            / "opencv"
+            / "imagens"
+            / nome_imagem
+        )
 
         assinatura = hashlib.sha256(
             origem.read_bytes()
@@ -68,6 +76,7 @@ def main():
 
         pasta = destino / f"manuscrito_{amostra['id']:02d}"
         pasta.mkdir()
+        visualizacao = imagem.copy()
 
         mesma_quantidade = (
             len(resultados) == len(referencias)
@@ -80,6 +89,23 @@ def main():
             )
 
             nome = f"linha_{indice:02d}"
+            cv2.rectangle(
+                visualizacao,
+                (x, y),
+                (x + largura - 1, y + altura - 1),
+                (0, 180, 0),
+                2
+            )
+
+            cv2.putText(
+                visualizacao,
+                str(indice),
+                (x, max(20, y - 5)),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                (0, 0, 255),
+                2
+            )
 
             salvar_imagem(
                 pasta / f"{nome}_limpa.png",
@@ -114,7 +140,11 @@ def main():
                 "aprovado": False,
                 "quantidade_compativel": mesma_quantidade,
             })
-
+        
+        salvar_imagem(
+            pasta / "visao_geral.png",
+            visualizacao
+        )
         # Salva o progresso após cada imagem.
         (destino / "manifesto.json").write_text(
             json.dumps(

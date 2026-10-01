@@ -276,6 +276,7 @@ def detectar_linhas(
     if not faixas:
         return []
 
+    pendentes = []
     grupos = [[] for _ in faixas]
 
     for componente in componentes:
@@ -308,9 +309,103 @@ def detectar_linhas(
             melhor = int(np.argmin(distancias))
 
             if distancias[melhor] > altura_referencia * 0.35:
+                pendentes.append(componente)
+                continue
+        grupos[melhor].append(componente)
+    # Limites reais dos componentes já associados às linhas.
+    # Permanecem fixos para evitar incorporar marcas em cadeia.
+    limites = []
+
+    for grupo in grupos:
+        if not grupo:
+            limites.append(None)
+            continue
+
+        limites.append((
+            min(c["x"] for c in grupo),
+            min(c["y"] for c in grupo),
+            max(c["x"] + c["largura"] for c in grupo),
+            max(c["y"] + c["altura"] for c in grupo),
+        ))
+
+    # Segunda tentativa para pequenos componentes separados.
+    for componente in pendentes:
+        tamanho_compativel = (
+            0.25 * altura_referencia
+            <= componente["altura"]
+            <= altura_referencia
+            and componente["largura"] <= altura_referencia
+        )
+
+        if not tamanho_compativel:
+            continue
+
+        x = componente["x"]
+        y = componente["y"]
+        direita = x + componente["largura"]
+        base = y + componente["altura"]
+
+        destinos = []
+
+        for indice, limite in enumerate(limites):
+            if limite is None:
                 continue
 
-        grupos[melhor].append(componente)
+            x1, y1, x2, y2 = limite
+
+            distancia_x = max(x1 - direita, x - x2, 0)
+            distancia_y = max(y1 - base, y - y2, 0)
+
+            if (
+                distancia_x <= altura_referencia
+                and distancia_y <= altura_referencia * 0.35
+            ):
+                destinos.append(indice)
+
+        # Só recupera quando há uma única linha compatível.
+        if len(destinos) == 1:
+            grupos[destinos[0]].append(componente)
+        # Reassocia marcas pequenas contidas em outro grupo.
+    for indice, grupo in enumerate(grupos):
+        if not grupo:
+            continue
+
+        x1 = min(c["x"] for c in grupo)
+        y1 = min(c["y"] for c in grupo)
+        x2 = max(c["x"] + c["largura"] for c in grupo)
+        y2 = max(c["y"] + c["altura"] for c in grupo)
+
+        destinos = []
+
+        for outro_indice, outro in enumerate(grupos):
+            if outro_indice == indice or not outro:
+                continue
+
+            ox1 = min(c["x"] for c in outro)
+            oy1 = min(c["y"] for c in outro)
+            ox2 = max(c["x"] + c["largura"] for c in outro)
+            oy2 = max(c["y"] + c["altura"] for c in outro)
+
+            esta_contido = (
+                ox1 <= x1
+                and x2 <= ox2
+                and oy1 <= y1
+                and y2 <= oy2
+            )
+
+            pequeno_em_relacao_a_linha = (
+                y2 - y1 <= 0.35 * (oy2 - oy1)
+            )
+
+            if esta_contido and pequeno_em_relacao_a_linha:
+                area = (ox2 - ox1) * (oy2 - oy1)
+                destinos.append((area, outro_indice))
+
+        if destinos:
+            # Prefere o menor grupo que contém a marca.
+            _, destino = min(destinos)
+            grupos[destino].extend(grupo)
+            grupos[indice] = []
 
     linhas = []
 

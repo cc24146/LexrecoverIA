@@ -1,5 +1,7 @@
 import re
 
+PADRAO_PALAVRAS = r"\w+(?:[-‐‑–'’]\w+)*"
+
 from .corretor import (
     corrigir_palavra,
     analisar_palavra
@@ -8,7 +10,7 @@ from .corretor import (
 
 def corrigir_texto(texto):
     texto_corrigido = re.sub(
-        r"\w+(?:[-'’]\w+)*",
+        PADRAO_PALAVRAS,
         lambda trecho: corrigir_palavra(
             trecho.group()
         ),
@@ -24,7 +26,7 @@ def analisar_texto(texto):
     palavras = []
 
     for trecho in re.finditer(
-        r"\w+(?:[-‐‑–'’]\w+)*",
+        PADRAO_PALAVRAS,
         texto
     ):
         palavra = trecho.group()

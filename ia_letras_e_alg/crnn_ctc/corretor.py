@@ -93,6 +93,50 @@ def distancia_levenshtein(s1: str, s2: str) -> int:
 
     return distancia_anterior[-1]
 
+def distancia_levenshtein_limitada(
+    s1,
+    s2,
+    limite=2
+):
+    if abs(len(s1) - len(s2)) > limite:
+        return limite + 1
+
+    if len(s1) > len(s2):
+        s1, s2 = s2, s1
+
+    anterior = list(
+        range(len(s1) + 1)
+    )
+
+    for i, caractere2 in enumerate(
+        s2,
+        start=1
+    ):
+        atual = [i]
+
+        for j, caractere1 in enumerate(
+            s1,
+            start=1
+        ):
+            atual.append(
+                min(
+                    atual[j - 1] + 1,
+                    anterior[j] + 1,
+                    anterior[j - 1]
+                    + (caractere1 != caractere2)
+                )
+            )
+
+        if min(atual) > limite:
+            return limite + 1
+
+        anterior = atual
+
+    return min(
+        anterior[-1],
+        limite + 1
+    )
+
 def corrigir_palavra(palavra):
 
     if isinstance(palavra, list):
@@ -250,9 +294,10 @@ def analisar_palavra(palavra):
         if abs(len(candidato) - len(palavra_normalizada)) > 2:
             continue
 
-        distancia = distancia_levenshtein(
+        distancia = distancia_levenshtein_limitada(
             palavra_normalizada,
-            candidato
+            candidato,
+            limite=2
         )
 
         if 1 <= distancia <= 2:

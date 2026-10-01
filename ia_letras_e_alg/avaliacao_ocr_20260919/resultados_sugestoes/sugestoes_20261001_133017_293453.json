@@ -1,0 +1,81 @@
+{
+  "versao_formato": 1,
+  "data_utc": "2026-10-01T13:30:17.293453+00:00",
+  "escopo": "Avaliação de sugestões sobre previsões salvas; conjunto de desenvolvimento com referências provisórias; sem nova execução do OCR.",
+  "python": "3.14.3 (v3.14.3:323c59a5e34, Feb  3 2026, 11:41:37) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "duracao_segundos": 107.15,
+  "quantidade_linhas": 47,
+  "totais": {
+    "corretas": 98,
+    "corretas_com_alternativas": 3,
+    "substituicoes": 132,
+    "esperada_entre_candidatos": 37,
+    "substituicoes_sem_candidatos": 45,
+    "substituicoes_com_candidatos_inadequados": 50,
+    "ausentes": 5,
+    "extras": 2
+  },
+  "motivos_sem_candidatos": {
+    "presente_no_lexico": 19,
+    "expressao_protegida": 5,
+    "palavra_curta": 10,
+    "sem_candidato_ate_duas_edicoes": 11
+  },
+  "ordenacao": {
+    "esperada_primeira": 23,
+    "esperada_entre_cinco": 27
+  },
+  "listas": {
+    "escopo": "Palavras alinhadas com referência, corretas ou substituídas; exclui palavras extras.",
+    "quantidade_nao_vazias": 90,
+    "media_candidatos": 100.81111111111112,
+    "maior_lista": 501
+  },
+  "exemplos_primeiras_15_substituicoes": [
+    "Linha 1: 'voce' → referência 'você' | esperada disponível na posição 1 | motivo: multiplos_candidatos",
+    "Linha 1: 'val' → referência 'vai' | sem candidatos | motivo: presente_no_lexico",
+    "Linha 1: 'agpgo' → referência 'acreditar' | esperada ausente dos candidatos | motivo: multiplos_candidatos",
+    "Linha 2: 'MA5' → referência 'mas' | sem candidatos | motivo: expressao_protegida",
+    "Linha 2: 'voue' → referência 'você' | esperada disponível na posição 6 | motivo: multiplos_candidatos",
+    "Linha 2: 'Mbia' → referência 'cabia' | esperada disponível na posição 83 | motivo: multiplos_candidatos",
+    "Linha 2: 'ari' → referência 'aqui' | sem candidatos | motivo: palavra_curta",
+    "Linha 3: 'DDinha' → referência 'minha' | esperada disponível na posição 1 | motivo: multiplos_candidatos",
+    "Linha 3: '30a' → referência 'soa' | sem candidatos | motivo: expressao_protegida",
+    "Linha 5: 'Counções' → referência 'canções' | sem candidatos | motivo: sem_candidato_ate_duas_edicoes",
+    "Linha 5: 'Himar' → referência 'ninar' | esperada disponível na posição 47 | motivo: multiplos_candidatos",
+    "Linha 6: 'Graandle' → referência 'grande' | esperada disponível na posição 1 | motivo: candidato_unico",
+    "Linha 7: 'inícios' → referência 'vinicius' | esperada ausente dos candidatos | motivo: multiplos_candidatos",
+    "Linha 7: 'Quedes' → referência 'guedes' | sem candidatos | motivo: presente_no_lexico",
+    "Linha 9: 'Conso' → referência 'como' | esperada disponível na posição 16 | motivo: multiplos_candidatos"
+  ],
+  "arquivos_usados": {
+    "previsoes": {
+      "arquivo": "avaliacao_ocr_20260919/resultado_recortes_20260919_215750_708565.json",
+      "sha256": "dd4d110211f7ec1e6080a308d11f203069e799c6c359f71bb5b3aaac5cbe8402"
+    },
+    "avaliador": {
+      "arquivo": "avaliacao_ocr_20260919/avaliar_sugestoes.py",
+      "sha256": "3795913a2a234f526ff47139fded455db9338ccd09f2edbb082c4dfc8890f3f8"
+    },
+    "corretor": {
+      "arquivo": "crnn_ctc/corretor.py",
+      "sha256": "f329f25264b788a41c0e9ca51ef66b3ab58ca4f6b3334df60caccf930681b193"
+    },
+    "pos_processamento": {
+      "arquivo": "crnn_ctc/pos_processamento.py",
+      "sha256": "7076cb9a20e2dd27b6cbe1772d417d04543247a4434815d36d26913532d31e99"
+    },
+    "lexico": {
+      "arquivo": "crnn_ctc/banco/lexico.txt",
+      "sha256": "49ceabcc191610286efddec18e823c2889649bfbac4f6b29466c32b677b6e6e4"
+    },
+    "conjugacoes": {
+      "arquivo": "crnn_ctc/banco/conjugacoes.txt",
+      "sha256": "eacf64d23e951c032cacf6662a5850b5fefe1f6b770c21c3eb731b75ccc99892"
+    },
+    "icf": {
+      "arquivo": "crnn_ctc/banco/icf.txt",
+      "sha256": "5b9c79978eeeba8496749ba5777895bc99cbee8b12a107b7d34e6cae9aabac97"
+    }
+  }
+}

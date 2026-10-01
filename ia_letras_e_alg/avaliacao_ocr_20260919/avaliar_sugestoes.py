@@ -4,6 +4,9 @@ import sys
 import unicodedata
 from pathlib import Path
 from collections import Counter
+import hashlib
+from datetime import datetime, timezone
+from time import perf_counter
 
 
 PASTA = Path(__file__).resolve().parent
@@ -84,6 +87,7 @@ def alinhar(referencia, previsao):
 
 
 def main():
+    inicio_execucao = perf_counter()
     caminho = PASTA / (
         "resultado_recortes_"
         "20260919_215750_708565.json"
@@ -293,6 +297,107 @@ def main():
 
     for exemplo in exemplos:
         print(exemplo)
+    arquivos_usados = {
+        "previsoes": caminho,
+        "avaliador": Path(__file__).resolve(),
+        "corretor": (
+            PROJETO / "crnn_ctc" / "corretor.py"
+        ),
+        "pos_processamento": (
+            PROJETO / "crnn_ctc" / "pos_processamento.py"
+        ),
+        "lexico": (
+            PROJETO / "crnn_ctc" / "banco" / "lexico.txt"
+        ),
+        "conjugacoes": (
+            PROJETO / "crnn_ctc" / "banco" / "conjugacoes.txt"
+        ),
+        "icf": (
+            PROJETO / "crnn_ctc" / "banco" / "icf.txt"
+        ),
+    }
+
+    assinaturas = {}
+
+    for nome, arquivo in arquivos_usados.items():
+        assinaturas[nome] = {
+            "arquivo": arquivo.relative_to(
+                PROJETO
+            ).as_posix(),
+            "sha256": hashlib.sha256(
+                arquivo.read_bytes()
+            ).hexdigest(),
+        }
+
+    agora = datetime.now(timezone.utc)
+
+    resultado = {
+        "versao_formato": 1,
+        "data_utc": agora.isoformat(),
+        "escopo": (
+            "Avaliação de sugestões sobre previsões salvas; "
+            "conjunto de desenvolvimento com referências "
+            "provisórias; sem nova execução do OCR."
+        ),
+        "python": sys.version,
+        "duracao_segundos": round(
+            perf_counter() - inicio_execucao,
+            3
+        ),
+        "quantidade_linhas": len(dados["linhas"]),
+        "totais": totais,
+        "motivos_sem_candidatos": dict(
+            motivos_sem_candidatos
+        ),
+        "ordenacao": {
+            "esperada_primeira": esperada_primeira,
+            "esperada_entre_cinco": esperada_top5,
+        },
+        "listas": {
+            "escopo": (
+                "Palavras alinhadas com referência, "
+                "corretas ou substituídas; exclui palavras extras."
+            ),
+            "quantidade_nao_vazias": len(tamanhos_listas),
+            "media_candidatos": (
+                sum(tamanhos_listas) / len(tamanhos_listas)
+                if tamanhos_listas
+                else None
+            ),
+            "maior_lista": max(
+                tamanhos_listas,
+                default=0
+            ),
+        },
+        "exemplos_primeiras_15_substituicoes": exemplos,
+        "arquivos_usados": assinaturas,
+    }
+
+    pasta_resultados = PASTA / "resultados_sugestoes"
+    pasta_resultados.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    destino = pasta_resultados / (
+        "sugestoes_"
+        + agora.strftime("%Y%m%d_%H%M%S_%f")
+        + ".json"
+    )
+
+    with destino.open(
+        "x",
+        encoding="utf-8"
+    ) as arquivo:
+        json.dump(
+            resultado,
+            arquivo,
+            ensure_ascii=False,
+            indent=2
+        )
+        arquivo.write("\n")
+
+    print(f"\nAvaliação salva em: {destino}")
 
 
 if __name__ == "__main__":
